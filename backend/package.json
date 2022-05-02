@@ -1,0 +1,35 @@
+{
+	"name": "ulusmedia-backend",
+	"version": "0.0.1",
+	"description": "NodeJS backend with GraphQL",
+	"main": "./src/index.ts",
+	"scripts": {
+		"dev": "nodemon src/index.ts",
+		"migrate": "npx prisma migrate dev --name migration",
+		"generate": "ts-node generate.ts"
+	},
+	"author": "Kentets4",
+	"license": "ISC",
+	"dependencies": {
+		"@graphql-tools/merge": "^8.2.6",
+		"@graphql-tools/schema": "^8.3.5",
+		"@paljs/plugins": "^4.0.18",
+		"@prisma/client": "^3.11.1",
+		"apollo-server-cache-redis": "^3.3.1",
+		"apollo-server-core": "^3.6.6",
+		"apollo-server-express": "^3.6.6",
+		"dotenv": "^16.0.0",
+		"express": "^4.17.3",
+		"graphql": "^15.8.0",
+		"graphql-middleware": "^6.1.20",
+		"graphql-shield": "^7.5.0",
+		"graphql-upload": "^13.0.0",
+		"ioredis": "^5.0.1"
+	},
+	"devDependencies": {
+		"@paljs/generator": "^4.0.18",
+		"@paljs/schema": "^4.0.18",
+		"@types/node": "^17.0.23",
+		"prisma": "^3.11.1"
+	}
+}
