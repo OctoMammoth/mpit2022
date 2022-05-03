@@ -28,4 +28,3 @@ jobs:
         cache-dependency-path: 'backend/package-lock.json'
     - run: npm install
     - run: npm run migrate:deploy
-    - run: npm run deploy --env production
