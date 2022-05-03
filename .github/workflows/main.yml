@@ -22,6 +22,7 @@ jobs:
       with:
         node-version: 16
         cache: "npm"
+        cache-dependency-path: 'backend/package-lock.json'
     - run: npm install
     - run: npm run migrate
     - name: Cache
