@@ -7,8 +7,9 @@ import { RootStackParamList } from './rootStackParamList'
 import { useColorScheme } from 'react-native'
 
 import TestZone from '../pages/TestZone'
-import Jitsi from '../pages/Jitsi'
+import Jitsi from '../pages/Jitsi/index.js'
 import UploadImage from '../pages/UploadImage'
+import Auth from '../pages/Auth'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -30,6 +31,10 @@ export const RootStackNav = () => {
             headerShown: false,
             // headerTintColor: ColorSheet.textColor,
          }}>
+            <Stack.Screen
+               name="Auth"
+               component={Auth}
+            />
             <Stack.Screen
                name="TestZone"
                component={TestZone}
