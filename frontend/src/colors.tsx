@@ -95,10 +95,10 @@ export const ColorScheme = () => {
                disabled: Colors('gray', 1000),
                text: 'white',
                onPressText: 'white',
-               disabledText: 'white',
+               disabledText: Colors('gray', 800),
                border: Colors('primary', 700),
                onPressBorder: Colors('primary', 800),
-               disabledBorder: Colors('primary', 400),
+               disabledBorder: Colors('gray', 1000),
             },
             {
                backgroundColor: Colors('gray', 900),

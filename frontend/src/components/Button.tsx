@@ -9,9 +9,10 @@ type Props = {
    textStyle?: TextStyle
    type?: 1 | 2 | 3 | 4
    disabled?: boolean
+   onPress?: () => void
 }
 
-const Button = ({text, style, textStyle, type = 1, disabled}) => {
+const Button = ({text, style, textStyle, type = 1, disabled, onPress}) => {
    const [isPressedIn, setPressedIn] = useState(false)
 
    const ColorSheet = ColorScheme()
@@ -40,6 +41,7 @@ const Button = ({text, style, textStyle, type = 1, disabled}) => {
                  },
             style,
          ]}
+         onPress={onPress}
          onPressIn={useCallback(() => {
             setPressedIn(true)
          }, [isPressedIn])}
