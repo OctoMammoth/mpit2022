@@ -1,10 +1,13 @@
 module.exports = {
 	apps: [
 		{
-			name: "NodeServer",
 			script: "npm",
 			automation: false,
 			args: "run start",
+			watch: ["server", "client"],
+			// Delay between restart
+			watch_delay: 1000,
+			ignore_watch: ["node_modules", "client/img"],
 			env: {
 				NODE_ENV: "development",
 				DATABASE_URL: "postgresql://admin:vq012mv9@localhost:5432/dev?schema=public",
@@ -27,7 +30,7 @@ module.exports = {
 				SMS_RU_API: "EF483F1B-C4B0-B0CD-1BE4-7DE802BB5E15",
 				USER_SECRET: "gj0js912",
 				ADMIN_SECRET: "0v01k8s4",
-                PORT: 4000
+				PORT: 4000
 			}
 		}
 	]
