@@ -3,6 +3,9 @@
 
 name: Node.js CI/CD Development
 
+env:
+  DATABASE_URL: "postgresql://admin:vq012mv9@localhost:5432/dev?schema=public"
+
 on:
   push:
     branches: [ dev ]
