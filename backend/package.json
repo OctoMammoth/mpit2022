@@ -1,5 +1,5 @@
 {
-	"name": "ulusmedia-backend",
+	"name": "ascend-backend",
 	"version": "0.0.1",
 	"description": "NodeJS backend with GraphQL",
 	"main": "./src/index.ts",
