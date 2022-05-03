@@ -19,6 +19,7 @@ env:
   SMS_RU_API: "EF483F1B-C4B0-B0CD-1BE4-7DE802BB5E15"
   USER_SECRET: "gj0js912"
   ADMIN_SECRET: "0v01k8s4"
+  PORT: 4001
 
 jobs:
   build:
@@ -35,8 +36,8 @@ jobs:
       with:
         node-version: 16
         cache: 'yarn'
-    - run: yarn
-    - run: yarn migrate
+    - run: npx yarn
+    - run: npx yarn migrate
     - name: Cache
       uses: actions/cache@v3.0.2
       with:
