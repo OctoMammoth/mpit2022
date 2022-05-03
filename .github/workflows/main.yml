@@ -17,7 +17,6 @@ jobs:
       run:
         working-directory: backend
     steps:
-    - uses: CultureHQ/actions-yarn@v1.0.1
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
