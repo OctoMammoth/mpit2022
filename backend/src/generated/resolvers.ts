@@ -1,2 +1,8 @@
+import Membership from './Membership/resolvers'
+import Group from './Group/resolvers'
+import Comment from './Comment/resolvers'
+import Like from './Like/resolvers'
+import Post from './Post/resolvers'
+import File from './File/resolvers'
 import User from './User/resolvers'
-export default [User]
+export default [User, File, Post, Like, Comment, Group, Membership]
