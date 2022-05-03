@@ -11,6 +11,9 @@ type JsonDataType = {
 
 export type RootStackParamList = {
    TestZone: undefined
-
+   Jitsi: {
+      url: string
+   }
+   UploadImage: undefined
    Main: undefined
 }

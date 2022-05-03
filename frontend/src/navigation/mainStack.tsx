@@ -7,6 +7,8 @@ import { RootStackParamList } from './rootStackParamList'
 import { useColorScheme } from 'react-native'
 
 import TestZone from '../pages/TestZone'
+import Jitsi from '../pages/Jitsi'
+import UploadImage from '../pages/UploadImage'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -31,6 +33,14 @@ export const RootStackNav = () => {
             <Stack.Screen
                name="TestZone"
                component={TestZone}
+            />
+            <Stack.Screen
+               name="Jitsi"
+               component={Jitsi}
+            />
+            <Stack.Screen
+               name="UploadImage"
+               component={UploadImage}
             />
          <Stack.Group
             screenOptions={{
