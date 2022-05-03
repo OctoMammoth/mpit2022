@@ -37,7 +37,7 @@ jobs:
     - run: yarn
     - run: yarn migrate
     - name: Cache
-      uses: actions/cache@3.0.2
+      uses: actions/cache@v3.0.2
       with:
         path: prisma/**
       
