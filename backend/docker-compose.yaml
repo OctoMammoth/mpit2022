@@ -31,7 +31,8 @@ services:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: gk831nvi
     volumes:
-      - ./minio
+      - ./minio:/data1
+      - ./minio2:/data2
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 30s
