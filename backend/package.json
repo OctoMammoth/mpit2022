@@ -10,7 +10,7 @@
 		"resetDB": "npx prisma migrate reset --force",
 		"generate": "ts-node generate.ts",
 		"start": "ts-node src/index.ts",
-		"deploy": "pm2 start ecosystem.config.js --only NodeServer"
+		"deploy": "npx pm2 start ecosystem.config.js --only NodeServer"
 	},
 	"author": "Kentets4",
 	"license": "ISC",
