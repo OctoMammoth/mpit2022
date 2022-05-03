@@ -29,5 +29,7 @@ jobs:
     - run: npm install
     - run: npm run resetDB
     - run: npm run migrate
-    - run: npm run deploy
+    - run: chmod +x ./pm2_runner.sh
+    - run: bash ./pm2_runner.sh
+    #- run: npm run deploy
     
