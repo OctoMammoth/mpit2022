@@ -27,9 +27,5 @@ jobs:
         cache: "npm"
         cache-dependency-path: 'backend/package-lock.json'
     - run: npm install
-    - run: npm run migrate
-    - name: Cache
-      uses: actions/cache@v3.0.2
-      with:
-        path: prisma/**
+    - run: npm run migrate:deploy
     - run: npm run deploy --env production
