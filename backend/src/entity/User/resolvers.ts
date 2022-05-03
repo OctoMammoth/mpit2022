@@ -10,6 +10,13 @@ const User = {
 			const code = randomize("0", 4)
 			if (!User) { 
                 await prisma.user.create({ data: { tel, code } })
+                await sms.sms_send(
+                    {
+                        to: tel,
+                        text: code,
+                        from: "3Limbs"
+                    }
+                )
                 return {
                     status: "isNewUser"
                 }
