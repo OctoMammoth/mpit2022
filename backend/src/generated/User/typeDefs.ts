@@ -3,6 +3,43 @@ import gql from 'graphql-tag'
 export default gql`
   type User {
     id: String!
+    tel: String!
+    role: String
+    surname: String
+    name: String
+    createdPosts(
+      where: PostWhereInput
+      orderBy: PostOrderByWithRelationInput
+      cursor: PostWhereUniqueInput
+      take: Int
+      skip: Int
+      distinct: PostScalarFieldEnum
+    ): [Post!]!
+    likes(
+      where: LikeWhereInput
+      orderBy: LikeOrderByWithRelationInput
+      cursor: LikeWhereUniqueInput
+      take: Int
+      skip: Int
+      distinct: LikeScalarFieldEnum
+    ): [Like!]!
+    comments(
+      where: CommentWhereInput
+      orderBy: CommentOrderByWithRelationInput
+      cursor: CommentWhereUniqueInput
+      take: Int
+      skip: Int
+      distinct: CommentScalarFieldEnum
+    ): [Comment!]!
+    groups(
+      where: MembershipWhereInput
+      orderBy: MembershipOrderByWithRelationInput
+      cursor: MembershipWhereUniqueInput
+      take: Int
+      skip: Int
+      distinct: MembershipScalarFieldEnum
+    ): [Membership!]!
+    _count: UserCountOutputType!
   }
 
   type Query {
