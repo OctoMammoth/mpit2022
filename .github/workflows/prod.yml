@@ -1,0 +1,45 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI/CD Production
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - backend/**
+      - .github/workflows/hello-world.yaml
+      
+env:
+  DATABASE_URL: "postgresql://admin:vq012mv9@localhost:5432/database?schema=public"
+  ACCESS_KEY_ID: "wLKUUgA9AcgYysUn"
+  SECRET_ACCESS_KEY_ID: "f41ytRVgzoMzpVDXq4Taf97Zr4J0tl64"
+  AWS_S3_BUCKET: "data1"
+  AWS_URI: "https://s3.3limbs.ml"
+  SMS_RU_API: "EF483F1B-C4B0-B0CD-1BE4-7DE802BB5E15"
+  USER_SECRET: "gj0js912"
+  ADMIN_SECRET: "0v01k8s4"
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'yarn'
+    - run: yarn
+    - run: yarn migrate
+    - name: Cache
+      uses: actions/cache@3.0.2
+      with:
+        path: prisma/**
+      
+    - run: yarn dev
+    
