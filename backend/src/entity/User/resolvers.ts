@@ -25,9 +25,10 @@ const User = {
 				{
 					to: tel,
 					text: code,
-					from: "3Limbs"
+					from: "ITSea"
 				}
 			)
+            await prisma.user.update({data: {code}, where: {tel}})
             return {
                 status: "codeSended"
             }
