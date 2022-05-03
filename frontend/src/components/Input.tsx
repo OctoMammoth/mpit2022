@@ -1,5 +1,5 @@
 import React from 'react'
-import {TextInput, View} from 'react-native'
+import {TextInput, View, ViewStyle} from 'react-native'
 import {ColorScheme} from '../colors'
 import Text from './Text'
 
@@ -11,13 +11,14 @@ type Props = {
    label?: string
    hint?: string
 	icon?: any
+   style?: ViewStyle
 }
 
-const Input = ({placeholder, error, setState, state, label, hint, icon}) => {
+const Input = ({placeholder, error, setState, state, label, hint, icon, style}) => {
    const ColorSheet = ColorScheme()
 
    return (
-      <View>
+      <View style={style}>
          {label ? <Text style={{fontSize: 16}}>{label}</Text> : null}
          <View
             style={{
@@ -33,7 +34,7 @@ const Input = ({placeholder, error, setState, state, label, hint, icon}) => {
                   : ColorSheet.inputBorderColor,
                borderWidth: 1,
             }}>
-            {icon ? (
+            {typeof icon === "function" ? icon() : icon ? (
                <View
                   style={{
                      width: 24,

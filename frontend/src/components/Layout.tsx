@@ -13,8 +13,8 @@ const Layout = ({children, style}: Props) => {
          style={{
             backgroundColor: ColorScheme().backgroundColor,
             height: '100%',
-            paddingHorizontal: 8,
-            paddingTop: 24,
+            paddingHorizontal: 20,
+            paddingTop: 60,
             ...style,
          }}>
          {children}

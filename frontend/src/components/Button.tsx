@@ -10,9 +10,18 @@ type Props = {
    type?: 1 | 2 | 3 | 4
    disabled?: boolean
    onPress?: () => void
+   bold?: boolean
 }
 
-const Button = ({text, style, textStyle, type = 1, disabled, onPress}) => {
+const Button = ({
+   text,
+   style,
+   textStyle,
+   type = 1,
+   disabled,
+   onPress,
+   bold,
+}) => {
    const [isPressedIn, setPressedIn] = useState(false)
 
    const ColorSheet = ColorScheme()
@@ -24,7 +33,7 @@ const Button = ({text, style, textStyle, type = 1, disabled, onPress}) => {
          style={[
             {
                borderWidth: 1,
-					borderRadius: 8,
+               borderRadius: 8,
             },
             disabled
                ? {
@@ -48,7 +57,21 @@ const Button = ({text, style, textStyle, type = 1, disabled, onPress}) => {
          onPressOut={useCallback(() => {
             setPressedIn(false)
          }, [isPressedIn])}>
-         <Text bold style={{textAlign: 'center', fontSize: 14 , paddingVertical: 8, color: disabled ? ColorSheet.buttons[type - 1].disabledText : isPressedIn ? ColorSheet.buttons[type - 1].onPressText : ColorSheet.buttons[type - 1].text,  ...textStyle}}>{text}</Text>
+         <Text
+            bold
+            style={{
+               textAlign: 'center',
+               fontSize: 14,
+               paddingVertical: bold ? 12 : 8,
+               color: disabled
+                  ? ColorSheet.buttons[type - 1].disabledText
+                  : isPressedIn
+                  ? ColorSheet.buttons[type - 1].onPressText
+                  : ColorSheet.buttons[type - 1].text,
+               ...textStyle,
+            }}>
+            {text}
+         </Text>
       </TouchableOpacity>
    )
 }

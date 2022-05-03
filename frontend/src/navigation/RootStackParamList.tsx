@@ -14,6 +14,7 @@ export type RootStackParamList = {
    Jitsi: {
       url: string
    }
+   Auth: undefined
    UploadImage: undefined
    Main: undefined
 }
