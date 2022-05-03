@@ -29,5 +29,4 @@ jobs:
     - run: npm install
     - run: npm run resetDB
     - run: npm run migrate
-    - run: npm run deploy
     
