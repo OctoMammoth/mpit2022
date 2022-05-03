@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client"
 
 const jwt = require('jsonwebtoken')
 
-export const checkRole = async (authorization: string, role: string, prisma: PrismaClient, require: boolean) => {
+export const checkRole = async (authorization: string | undefined, role: string, prisma: PrismaClient, require: boolean) => {
     if (!authorization) {
         throw new Error('Not access')
     }
