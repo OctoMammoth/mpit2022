@@ -6,12 +6,12 @@ import Layout from "../../components/Layout"
 import Switch from "../../components/Switch"
 import Text from "../../components/Text"
 
-const TestZone = () => {
+const TestZone = ({navigation}) => {
     const [state, setState] = React.useState(0)
     return <Layout style={{}}>
         <Text>Hello world</Text>
-        <Button text="Hello"/>
-        <Button type={2} text="Hello"/>
+        <Button text="Jitsi" onPress={() => {navigation.push('Jitsi', {id: "HelloThere"})}}/>
+        <Button type={2} text="Upload Test" onPress={() => {navigation.push('UploadImage')}}/>
         <Button type={3} text="Hello"/>
         <Button type={4} text="Hello"/>
         <Button disabled text="Hello"/>
