@@ -23,7 +23,6 @@ jobs:
       with:
         node-version: 16
         cache: "npm"
-    - uses: c-hive/gha-yarn-cache@v1
     - run: npm install
     - run: npm run resetDB
     - run: npm run migrate
