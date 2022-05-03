@@ -11,5 +11,75 @@ datasource db {
 }
 
 model User {
-  id String @id @default(cuid())
+  id      String  @id @default(cuid())
+  tel     String  @unique
+  code    String?
+  role    String?
+  surname String?
+  name    String?
+
+  createdPosts Post[]
+  likes        Like[]
+  comments     Comment[]
+  groups       Membership[]
+}
+
+model File {
+  id       String @id @default(cuid())
+  filename String
+  mimetype String
+  encoding String
+  uri      String
+}
+
+model Post {
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  blocked     Boolean   @default(false)
+  picture     String[]
+  title       String
+  description String
+  comments    Comment[]
+  createdBy   User      @relation(fields: [userId], references: [id])
+  userId      String
+  // master   Master @relation(fields: [masterId], references: [id])
+  // masterId String
+  likes       Like[]
+}
+
+model Like {
+  id       String   @id @default(cuid())
+  createAt DateTime @default(now())
+  post     Post     @relation(fields: [postId], references: [id])
+  postId   String
+  user     User     @relation(fields: [userId], references: [id])
+  userId   String
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  blocked   Boolean  @default(false)
+  text      String
+  createdBy User     @relation(fields: [userId], references: [id])
+  Post      Post?    @relation(fields: [postId], references: [id])
+  postId    String?
+  userId    String
+}
+
+model Group {
+  id        String       @id @default(cuid())
+  createdAt DateTime     @default(now())
+  members   Membership[]
+}
+
+model Membership {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  Group     Group?   @relation(fields: [groupId], references: [id])
+  groupId   String?
 }
