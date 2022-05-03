@@ -8,7 +8,12 @@ const User = {
 		auth: async (_parent, { tel }, { prisma, sms }: { prisma: PrismaClient; sms: any }, info) => {
 			const User = await prisma.user.findUnique({ where: { tel } })
 			const code = randomize("0", 4)
-			if (!User) await prisma.user.create({ data: { tel, code } })
+			if (!User) { 
+                await prisma.user.create({ data: { tel, code } })
+                return {
+                    status: "isNewUser"
+                }
+            }
 			await sms.sms_send(
 				{
 					to: tel,
