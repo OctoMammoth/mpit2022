@@ -1,5 +1,4 @@
-import Membership from './Membership/typeDefs'
-import Group from './Group/typeDefs'
+import Chat from './Chat/typeDefs'
 import Comment from './Comment/typeDefs'
 import Like from './Like/typeDefs'
 import Post from './Post/typeDefs'
@@ -15,6 +14,5 @@ export default mergeTypeDefs([
   Post,
   Like,
   Comment,
-  Group,
-  Membership,
+  Chat,
 ])

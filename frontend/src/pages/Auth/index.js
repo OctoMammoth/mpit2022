@@ -6,6 +6,7 @@ import Button from '../../components/Button'
 import Input from '../../components/Input'
 import {useMutation} from '@apollo/client'
 import {AUTH} from '../../graphql/User/mutation'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Auth = ({navigation}) => {
    const [tel, setTel] = React.useState(null)
@@ -38,16 +39,25 @@ const Auth = ({navigation}) => {
             text={'Получить код'}
             style={{marginBottom: 8}}
             onPress={() => {
-               auth({
-						variables: {
-							tel
-						},
-                  onCompleted: data => {
-							console.log(data)
-                     navigation.push('Verify', {status: data.auth.status, tel})
-                  },
-               })
+               try {
+
+                  auth({
+                     variables: {
+                        tel
+                     },
+                     onCompleted: (data) => {
+                        console.log(data)
+                        navigation.push('Verify', {status: data.auth.status, tel})
+                     },
+                  })
+               } catch (err) {
+                  throw err
+               }
             }}
+            // onPress={() => {
+            //    AsyncStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNsMnFycHk1eTAwMDQxYWpnend6NjFpZ3MiLCJpYXQiOjE2NTE2MTk3NDB9.RbaY_9AhGI8DbzmW4mIF-MIJRvwBRCBmtHIyI9kDfFY")
+            //    navigation.navigate('Main')
+            // }}
          />
          {/* <Button bold type={2} text={'Зарегистрироваться'} /> */}
       </Layout>

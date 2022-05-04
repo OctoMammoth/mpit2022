@@ -18,8 +18,7 @@ export interface Resolvers {
   Post?: Post
   Like?: Like
   Comment?: Comment
-  Group?: Group
-  Membership?: Membership
+  Chat?: Chat
   Query?: Query
   Mutation?: Mutation
   AggregateUser?: AggregateUser
@@ -32,10 +31,8 @@ export interface Resolvers {
   LikeGroupByOutputType?: LikeGroupByOutputType
   AggregateComment?: AggregateComment
   CommentGroupByOutputType?: CommentGroupByOutputType
-  AggregateGroup?: AggregateGroup
-  GroupGroupByOutputType?: GroupGroupByOutputType
-  AggregateMembership?: AggregateMembership
-  MembershipGroupByOutputType?: MembershipGroupByOutputType
+  AggregateChat?: AggregateChat
+  ChatGroupByOutputType?: ChatGroupByOutputType
   AffectedRowsOutput?: AffectedRowsOutput
   UserCountOutputType?: UserCountOutputType
   UserCountAggregateOutputType?: UserCountAggregateOutputType
@@ -54,13 +51,10 @@ export interface Resolvers {
   CommentCountAggregateOutputType?: CommentCountAggregateOutputType
   CommentMinAggregateOutputType?: CommentMinAggregateOutputType
   CommentMaxAggregateOutputType?: CommentMaxAggregateOutputType
-  GroupCountOutputType?: GroupCountOutputType
-  GroupCountAggregateOutputType?: GroupCountAggregateOutputType
-  GroupMinAggregateOutputType?: GroupMinAggregateOutputType
-  GroupMaxAggregateOutputType?: GroupMaxAggregateOutputType
-  MembershipCountAggregateOutputType?: MembershipCountAggregateOutputType
-  MembershipMinAggregateOutputType?: MembershipMinAggregateOutputType
-  MembershipMaxAggregateOutputType?: MembershipMaxAggregateOutputType
+  ChatCountOutputType?: ChatCountOutputType
+  ChatCountAggregateOutputType?: ChatCountAggregateOutputType
+  ChatMinAggregateOutputType?: ChatMinAggregateOutputType
+  ChatMaxAggregateOutputType?: ChatMaxAggregateOutputType
 }
 
 export interface User {
@@ -78,7 +72,7 @@ export interface User {
   >
   likes?: Resolver<Client.User, UserLikesArgs, Client.Like[] | null>
   comments?: Resolver<Client.User, UserCommentsArgs, Client.Comment[] | null>
-  groups?: Resolver<Client.User, UserGroupsArgs, Client.Membership[] | null>
+  chats?: Resolver<Client.User, UserChatsArgs, Client.Chat[] | null>
   _count?: Resolver<Client.User, {}, Client.Prisma.UserCountOutputType>
 }
 
@@ -130,22 +124,13 @@ export interface Comment {
   userId?: Resolver<Client.Comment, {}, string>
 }
 
-export interface Group {
+export interface Chat {
   [key: string]: Resolver<any, any, any>
-  id?: Resolver<Client.Group, {}, string>
-  createdAt?: Resolver<Client.Group, {}, Date>
-  members?: Resolver<Client.Group, GroupMembersArgs, Client.Membership[] | null>
-  _count?: Resolver<Client.Group, {}, Client.Prisma.GroupCountOutputType>
-}
-
-export interface Membership {
-  [key: string]: Resolver<any, any, any>
-  id?: Resolver<Client.Membership, {}, string>
-  createdAt?: Resolver<Client.Membership, {}, Date>
-  User?: Resolver<Client.Membership, {}, Client.User | null>
-  userId?: Resolver<Client.Membership, {}, string | null>
-  Group?: Resolver<Client.Membership, {}, Client.Group | null>
-  groupId?: Resolver<Client.Membership, {}, string | null>
+  id?: Resolver<Client.Chat, {}, string>
+  createdAt?: Resolver<Client.Chat, {}, Date>
+  updatedAt?: Resolver<Client.Chat, {}, Date>
+  users?: Resolver<Client.Chat, ChatUsersArgs, Client.User[] | null>
+  _count?: Resolver<Client.Chat, {}, Client.Prisma.ChatCountOutputType>
 }
 
 export interface Query {
@@ -220,42 +205,20 @@ export interface Query {
     Client.Prisma.CommentGroupByOutputType[]
   >
   findUniqueComment?: Resolver<{}, FindUniqueCommentArgs, Client.Comment | null>
-  findFirstGroup?: Resolver<{}, FindFirstGroupArgs, Client.Group | null>
-  findManyGroup?: Resolver<{}, FindManyGroupArgs, Client.Group[]>
-  findManyGroupCount?: Resolver<{}, FindManyGroupArgs, number>
-  aggregateGroup?: Resolver<
+  findFirstChat?: Resolver<{}, FindFirstChatArgs, Client.Chat | null>
+  findManyChat?: Resolver<{}, FindManyChatArgs, Client.Chat[]>
+  findManyChatCount?: Resolver<{}, FindManyChatArgs, number>
+  aggregateChat?: Resolver<
     {},
-    AggregateGroupArgs,
-    Client.Prisma.GetGroupAggregateType<AggregateGroupArgs>
+    AggregateChatArgs,
+    Client.Prisma.GetChatAggregateType<AggregateChatArgs>
   >
-  groupByGroup?: Resolver<
+  groupByChat?: Resolver<
     {},
-    GroupByGroupArgs,
-    Client.Prisma.GroupGroupByOutputType[]
+    GroupByChatArgs,
+    Client.Prisma.ChatGroupByOutputType[]
   >
-  findUniqueGroup?: Resolver<{}, FindUniqueGroupArgs, Client.Group | null>
-  findFirstMembership?: Resolver<
-    {},
-    FindFirstMembershipArgs,
-    Client.Membership | null
-  >
-  findManyMembership?: Resolver<{}, FindManyMembershipArgs, Client.Membership[]>
-  findManyMembershipCount?: Resolver<{}, FindManyMembershipArgs, number>
-  aggregateMembership?: Resolver<
-    {},
-    AggregateMembershipArgs,
-    Client.Prisma.GetMembershipAggregateType<AggregateMembershipArgs>
-  >
-  groupByMembership?: Resolver<
-    {},
-    GroupByMembershipArgs,
-    Client.Prisma.MembershipGroupByOutputType[]
-  >
-  findUniqueMembership?: Resolver<
-    {},
-    FindUniqueMembershipArgs,
-    Client.Membership | null
-  >
+  findUniqueChat?: Resolver<{}, FindUniqueChatArgs, Client.Chat | null>
 }
 
 export interface Mutation {
@@ -307,52 +270,13 @@ export interface Mutation {
     DeleteManyCommentArgs,
     Client.Prisma.BatchPayload
   >
-  createOneGroup?: Resolver<{}, CreateOneGroupArgs, Client.Group>
-  upsertOneGroup?: Resolver<{}, UpsertOneGroupArgs, Client.Group>
-  createManyGroup?: Resolver<
-    {},
-    CreateManyGroupArgs,
-    Client.Prisma.BatchPayload
-  >
-  deleteOneGroup?: Resolver<{}, DeleteOneGroupArgs, Client.Group | null>
-  updateOneGroup?: Resolver<{}, UpdateOneGroupArgs, Client.Group | null>
-  updateManyGroup?: Resolver<
-    {},
-    UpdateManyGroupArgs,
-    Client.Prisma.BatchPayload
-  >
-  deleteManyGroup?: Resolver<
-    {},
-    DeleteManyGroupArgs,
-    Client.Prisma.BatchPayload
-  >
-  createOneMembership?: Resolver<{}, CreateOneMembershipArgs, Client.Membership>
-  upsertOneMembership?: Resolver<{}, UpsertOneMembershipArgs, Client.Membership>
-  createManyMembership?: Resolver<
-    {},
-    CreateManyMembershipArgs,
-    Client.Prisma.BatchPayload
-  >
-  deleteOneMembership?: Resolver<
-    {},
-    DeleteOneMembershipArgs,
-    Client.Membership | null
-  >
-  updateOneMembership?: Resolver<
-    {},
-    UpdateOneMembershipArgs,
-    Client.Membership | null
-  >
-  updateManyMembership?: Resolver<
-    {},
-    UpdateManyMembershipArgs,
-    Client.Prisma.BatchPayload
-  >
-  deleteManyMembership?: Resolver<
-    {},
-    DeleteManyMembershipArgs,
-    Client.Prisma.BatchPayload
-  >
+  createOneChat?: Resolver<{}, CreateOneChatArgs, Client.Chat>
+  upsertOneChat?: Resolver<{}, UpsertOneChatArgs, Client.Chat>
+  createManyChat?: Resolver<{}, CreateManyChatArgs, Client.Prisma.BatchPayload>
+  deleteOneChat?: Resolver<{}, DeleteOneChatArgs, Client.Chat | null>
+  updateOneChat?: Resolver<{}, UpdateOneChatArgs, Client.Chat | null>
+  updateManyChat?: Resolver<{}, UpdateManyChatArgs, Client.Prisma.BatchPayload>
+  deleteManyChat?: Resolver<{}, DeleteManyChatArgs, Client.Prisma.BatchPayload>
   executeRaw?: Resolver<{}, ExecuteRawArgs, any>
   queryRaw?: Resolver<{}, QueryRawArgs, any>
 }
@@ -577,93 +501,44 @@ export interface CommentGroupByOutputType {
   >
 }
 
-export interface AggregateGroup {
+export interface AggregateChat {
   [key: string]: Resolver<any, any, any>
   _count?: Resolver<
-    Client.Prisma.AggregateGroup,
+    Client.Prisma.AggregateChat,
     {},
-    Client.Prisma.GroupCountAggregateOutputType | null
+    Client.Prisma.ChatCountAggregateOutputType | null
   >
   _min?: Resolver<
-    Client.Prisma.AggregateGroup,
+    Client.Prisma.AggregateChat,
     {},
-    Client.Prisma.GroupMinAggregateOutputType | null
+    Client.Prisma.ChatMinAggregateOutputType | null
   >
   _max?: Resolver<
-    Client.Prisma.AggregateGroup,
+    Client.Prisma.AggregateChat,
     {},
-    Client.Prisma.GroupMaxAggregateOutputType | null
+    Client.Prisma.ChatMaxAggregateOutputType | null
   >
 }
 
-export interface GroupGroupByOutputType {
+export interface ChatGroupByOutputType {
   [key: string]: Resolver<any, any, any>
-  id?: Resolver<Client.Prisma.GroupGroupByOutputType, {}, string>
-  createdAt?: Resolver<Client.Prisma.GroupGroupByOutputType, {}, Date>
+  id?: Resolver<Client.Prisma.ChatGroupByOutputType, {}, string>
+  createdAt?: Resolver<Client.Prisma.ChatGroupByOutputType, {}, Date>
+  updatedAt?: Resolver<Client.Prisma.ChatGroupByOutputType, {}, Date>
   _count?: Resolver<
-    Client.Prisma.GroupGroupByOutputType,
+    Client.Prisma.ChatGroupByOutputType,
     {},
-    Client.Prisma.GroupCountAggregateOutputType | null
+    Client.Prisma.ChatCountAggregateOutputType | null
   >
   _min?: Resolver<
-    Client.Prisma.GroupGroupByOutputType,
+    Client.Prisma.ChatGroupByOutputType,
     {},
-    Client.Prisma.GroupMinAggregateOutputType | null
+    Client.Prisma.ChatMinAggregateOutputType | null
   >
   _max?: Resolver<
-    Client.Prisma.GroupGroupByOutputType,
+    Client.Prisma.ChatGroupByOutputType,
     {},
-    Client.Prisma.GroupMaxAggregateOutputType | null
-  >
-}
-
-export interface AggregateMembership {
-  [key: string]: Resolver<any, any, any>
-  _count?: Resolver<
-    Client.Prisma.AggregateMembership,
-    {},
-    Client.Prisma.MembershipCountAggregateOutputType | null
-  >
-  _min?: Resolver<
-    Client.Prisma.AggregateMembership,
-    {},
-    Client.Prisma.MembershipMinAggregateOutputType | null
-  >
-  _max?: Resolver<
-    Client.Prisma.AggregateMembership,
-    {},
-    Client.Prisma.MembershipMaxAggregateOutputType | null
-  >
-}
-
-export interface MembershipGroupByOutputType {
-  [key: string]: Resolver<any, any, any>
-  id?: Resolver<Client.Prisma.MembershipGroupByOutputType, {}, string>
-  createdAt?: Resolver<Client.Prisma.MembershipGroupByOutputType, {}, Date>
-  userId?: Resolver<
-    Client.Prisma.MembershipGroupByOutputType,
-    {},
-    string | null
-  >
-  groupId?: Resolver<
-    Client.Prisma.MembershipGroupByOutputType,
-    {},
-    string | null
-  >
-  _count?: Resolver<
-    Client.Prisma.MembershipGroupByOutputType,
-    {},
-    Client.Prisma.MembershipCountAggregateOutputType | null
-  >
-  _min?: Resolver<
-    Client.Prisma.MembershipGroupByOutputType,
-    {},
-    Client.Prisma.MembershipMinAggregateOutputType | null
-  >
-  _max?: Resolver<
-    Client.Prisma.MembershipGroupByOutputType,
-    {},
-    Client.Prisma.MembershipMaxAggregateOutputType | null
+    Client.Prisma.ChatMaxAggregateOutputType | null
   >
 }
 
@@ -677,7 +552,7 @@ export interface UserCountOutputType {
   createdPosts?: Resolver<Client.Prisma.UserCountOutputType, {}, number>
   likes?: Resolver<Client.Prisma.UserCountOutputType, {}, number>
   comments?: Resolver<Client.Prisma.UserCountOutputType, {}, number>
-  groups?: Resolver<Client.Prisma.UserCountOutputType, {}, number>
+  chats?: Resolver<Client.Prisma.UserCountOutputType, {}, number>
 }
 
 export interface UserCountAggregateOutputType {
@@ -959,104 +834,46 @@ export interface CommentMaxAggregateOutputType {
   >
 }
 
-export interface GroupCountOutputType {
+export interface ChatCountOutputType {
   [key: string]: Resolver<any, any, any>
-  members?: Resolver<Client.Prisma.GroupCountOutputType, {}, number>
+  users?: Resolver<Client.Prisma.ChatCountOutputType, {}, number>
 }
 
-export interface GroupCountAggregateOutputType {
+export interface ChatCountAggregateOutputType {
   [key: string]: Resolver<any, any, any>
-  id?: Resolver<Client.Prisma.GroupCountAggregateOutputType, {}, number>
-  createdAt?: Resolver<Client.Prisma.GroupCountAggregateOutputType, {}, number>
-  _all?: Resolver<Client.Prisma.GroupCountAggregateOutputType, {}, number>
+  id?: Resolver<Client.Prisma.ChatCountAggregateOutputType, {}, number>
+  createdAt?: Resolver<Client.Prisma.ChatCountAggregateOutputType, {}, number>
+  updatedAt?: Resolver<Client.Prisma.ChatCountAggregateOutputType, {}, number>
+  _all?: Resolver<Client.Prisma.ChatCountAggregateOutputType, {}, number>
 }
 
-export interface GroupMinAggregateOutputType {
+export interface ChatMinAggregateOutputType {
   [key: string]: Resolver<any, any, any>
-  id?: Resolver<Client.Prisma.GroupMinAggregateOutputType, {}, string | null>
+  id?: Resolver<Client.Prisma.ChatMinAggregateOutputType, {}, string | null>
   createdAt?: Resolver<
-    Client.Prisma.GroupMinAggregateOutputType,
+    Client.Prisma.ChatMinAggregateOutputType,
+    {},
+    Date | null
+  >
+  updatedAt?: Resolver<
+    Client.Prisma.ChatMinAggregateOutputType,
     {},
     Date | null
   >
 }
 
-export interface GroupMaxAggregateOutputType {
+export interface ChatMaxAggregateOutputType {
   [key: string]: Resolver<any, any, any>
-  id?: Resolver<Client.Prisma.GroupMaxAggregateOutputType, {}, string | null>
+  id?: Resolver<Client.Prisma.ChatMaxAggregateOutputType, {}, string | null>
   createdAt?: Resolver<
-    Client.Prisma.GroupMaxAggregateOutputType,
+    Client.Prisma.ChatMaxAggregateOutputType,
     {},
     Date | null
   >
-}
-
-export interface MembershipCountAggregateOutputType {
-  [key: string]: Resolver<any, any, any>
-  id?: Resolver<Client.Prisma.MembershipCountAggregateOutputType, {}, number>
-  createdAt?: Resolver<
-    Client.Prisma.MembershipCountAggregateOutputType,
-    {},
-    number
-  >
-  userId?: Resolver<
-    Client.Prisma.MembershipCountAggregateOutputType,
-    {},
-    number
-  >
-  groupId?: Resolver<
-    Client.Prisma.MembershipCountAggregateOutputType,
-    {},
-    number
-  >
-  _all?: Resolver<Client.Prisma.MembershipCountAggregateOutputType, {}, number>
-}
-
-export interface MembershipMinAggregateOutputType {
-  [key: string]: Resolver<any, any, any>
-  id?: Resolver<
-    Client.Prisma.MembershipMinAggregateOutputType,
-    {},
-    string | null
-  >
-  createdAt?: Resolver<
-    Client.Prisma.MembershipMinAggregateOutputType,
+  updatedAt?: Resolver<
+    Client.Prisma.ChatMaxAggregateOutputType,
     {},
     Date | null
-  >
-  userId?: Resolver<
-    Client.Prisma.MembershipMinAggregateOutputType,
-    {},
-    string | null
-  >
-  groupId?: Resolver<
-    Client.Prisma.MembershipMinAggregateOutputType,
-    {},
-    string | null
-  >
-}
-
-export interface MembershipMaxAggregateOutputType {
-  [key: string]: Resolver<any, any, any>
-  id?: Resolver<
-    Client.Prisma.MembershipMaxAggregateOutputType,
-    {},
-    string | null
-  >
-  createdAt?: Resolver<
-    Client.Prisma.MembershipMaxAggregateOutputType,
-    {},
-    Date | null
-  >
-  userId?: Resolver<
-    Client.Prisma.MembershipMaxAggregateOutputType,
-    {},
-    string | null
-  >
-  groupId?: Resolver<
-    Client.Prisma.MembershipMaxAggregateOutputType,
-    {},
-    string | null
   >
 }
 
@@ -1087,13 +904,13 @@ export interface UserCommentsArgs {
   distinct?: CommentScalarFieldEnum[] | null
 }
 
-export interface UserGroupsArgs {
-  where?: MembershipWhereInput | null
-  orderBy?: MembershipOrderByWithRelationInput[] | null
-  cursor?: MembershipWhereUniqueInput | null
+export interface UserChatsArgs {
+  where?: ChatWhereInput | null
+  orderBy?: ChatOrderByWithRelationInput[] | null
+  cursor?: ChatWhereUniqueInput | null
   take?: number | null
   skip?: number | null
-  distinct?: MembershipScalarFieldEnum[] | null
+  distinct?: ChatScalarFieldEnum[] | null
 }
 
 export interface PostCommentsArgs {
@@ -1114,13 +931,13 @@ export interface PostLikesArgs {
   distinct?: LikeScalarFieldEnum[] | null
 }
 
-export interface GroupMembersArgs {
-  where?: MembershipWhereInput | null
-  orderBy?: MembershipOrderByWithRelationInput[] | null
-  cursor?: MembershipWhereUniqueInput | null
+export interface ChatUsersArgs {
+  where?: UserWhereInput | null
+  orderBy?: UserOrderByWithRelationInput[] | null
+  cursor?: UserWhereUniqueInput | null
   take?: number | null
   skip?: number | null
-  distinct?: MembershipScalarFieldEnum[] | null
+  distinct?: UserScalarFieldEnum[] | null
 }
 
 export interface FindFirstUserArgs {
@@ -1333,88 +1150,46 @@ export interface FindUniqueCommentArgs {
   where: CommentWhereUniqueInput | null
 }
 
-export interface FindFirstGroupArgs {
-  where?: GroupWhereInput | null
-  orderBy?: GroupOrderByWithRelationInput[] | null
-  cursor?: GroupWhereUniqueInput | null
+export interface FindFirstChatArgs {
+  where?: ChatWhereInput | null
+  orderBy?: ChatOrderByWithRelationInput[] | null
+  cursor?: ChatWhereUniqueInput | null
   take?: number | null
   skip?: number | null
-  distinct?: GroupScalarFieldEnum[] | null
+  distinct?: ChatScalarFieldEnum[] | null
 }
 
-export interface FindManyGroupArgs {
-  where?: GroupWhereInput
-  orderBy?: GroupOrderByWithRelationInput[]
-  cursor?: GroupWhereUniqueInput
+export interface FindManyChatArgs {
+  where?: ChatWhereInput
+  orderBy?: ChatOrderByWithRelationInput[]
+  cursor?: ChatWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: GroupScalarFieldEnum[]
+  distinct?: ChatScalarFieldEnum[]
 }
 
-export interface AggregateGroupArgs {
-  where?: GroupWhereInput
-  orderBy?: GroupOrderByWithRelationInput[]
-  cursor?: GroupWhereUniqueInput
+export interface AggregateChatArgs {
+  where?: ChatWhereInput
+  orderBy?: ChatOrderByWithRelationInput[]
+  cursor?: ChatWhereUniqueInput
   take?: number
   skip?: number
-  _count?: Client.Prisma.GroupCountAggregateInputType
-  _min?: Client.Prisma.GroupMinAggregateInputType
-  _max?: Client.Prisma.GroupMaxAggregateInputType
+  _count?: Client.Prisma.ChatCountAggregateInputType
+  _min?: Client.Prisma.ChatMinAggregateInputType
+  _max?: Client.Prisma.ChatMaxAggregateInputType
 }
 
-export interface GroupByGroupArgs {
-  where?: GroupWhereInput
-  orderBy?: GroupOrderByWithAggregationInput[]
-  by: GroupScalarFieldEnum[]
-  having?: GroupScalarWhereWithAggregatesInput
-  take?: number
-  skip?: number
-}
-
-export interface FindUniqueGroupArgs {
-  where: GroupWhereUniqueInput | null
-}
-
-export interface FindFirstMembershipArgs {
-  where?: MembershipWhereInput | null
-  orderBy?: MembershipOrderByWithRelationInput[] | null
-  cursor?: MembershipWhereUniqueInput | null
-  take?: number | null
-  skip?: number | null
-  distinct?: MembershipScalarFieldEnum[] | null
-}
-
-export interface FindManyMembershipArgs {
-  where?: MembershipWhereInput
-  orderBy?: MembershipOrderByWithRelationInput[]
-  cursor?: MembershipWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: MembershipScalarFieldEnum[]
-}
-
-export interface AggregateMembershipArgs {
-  where?: MembershipWhereInput
-  orderBy?: MembershipOrderByWithRelationInput[]
-  cursor?: MembershipWhereUniqueInput
-  take?: number
-  skip?: number
-  _count?: Client.Prisma.MembershipCountAggregateInputType
-  _min?: Client.Prisma.MembershipMinAggregateInputType
-  _max?: Client.Prisma.MembershipMaxAggregateInputType
-}
-
-export interface GroupByMembershipArgs {
-  where?: MembershipWhereInput
-  orderBy?: MembershipOrderByWithAggregationInput[]
-  by: MembershipScalarFieldEnum[]
-  having?: MembershipScalarWhereWithAggregatesInput
+export interface GroupByChatArgs {
+  where?: ChatWhereInput
+  orderBy?: ChatOrderByWithAggregationInput[]
+  by: ChatScalarFieldEnum[]
+  having?: ChatScalarWhereWithAggregatesInput
   take?: number
   skip?: number
 }
 
-export interface FindUniqueMembershipArgs {
-  where: MembershipWhereUniqueInput | null
+export interface FindUniqueChatArgs {
+  where: ChatWhereUniqueInput | null
 }
 
 export interface CreateOneUserArgs {
@@ -1582,70 +1357,37 @@ export interface DeleteManyCommentArgs {
   where?: CommentWhereInput
 }
 
-export interface CreateOneGroupArgs {
-  data: GroupCreateInput
+export interface CreateOneChatArgs {
+  data: ChatCreateInput
 }
 
-export interface UpsertOneGroupArgs {
-  where: GroupWhereUniqueInput
-  create: GroupCreateInput
-  update: GroupUpdateInput
+export interface UpsertOneChatArgs {
+  where: ChatWhereUniqueInput
+  create: ChatCreateInput
+  update: ChatUpdateInput
 }
 
-export interface CreateManyGroupArgs {
-  data: GroupCreateManyInput[]
+export interface CreateManyChatArgs {
+  data: ChatCreateManyInput[]
   skipDuplicates?: boolean
 }
 
-export interface DeleteOneGroupArgs {
-  where: GroupWhereUniqueInput | null
+export interface DeleteOneChatArgs {
+  where: ChatWhereUniqueInput | null
 }
 
-export interface UpdateOneGroupArgs {
-  data: GroupUpdateInput | null
-  where: GroupWhereUniqueInput | null
+export interface UpdateOneChatArgs {
+  data: ChatUpdateInput | null
+  where: ChatWhereUniqueInput | null
 }
 
-export interface UpdateManyGroupArgs {
-  data: GroupUpdateManyMutationInput
-  where?: GroupWhereInput
+export interface UpdateManyChatArgs {
+  data: ChatUpdateManyMutationInput
+  where?: ChatWhereInput
 }
 
-export interface DeleteManyGroupArgs {
-  where?: GroupWhereInput
-}
-
-export interface CreateOneMembershipArgs {
-  data: MembershipCreateInput
-}
-
-export interface UpsertOneMembershipArgs {
-  where: MembershipWhereUniqueInput
-  create: MembershipCreateInput
-  update: MembershipUpdateInput
-}
-
-export interface CreateManyMembershipArgs {
-  data: MembershipCreateManyInput[]
-  skipDuplicates?: boolean
-}
-
-export interface DeleteOneMembershipArgs {
-  where: MembershipWhereUniqueInput | null
-}
-
-export interface UpdateOneMembershipArgs {
-  data: MembershipUpdateInput | null
-  where: MembershipWhereUniqueInput | null
-}
-
-export interface UpdateManyMembershipArgs {
-  data: MembershipUpdateManyMutationInput
-  where?: MembershipWhereInput
-}
-
-export interface DeleteManyMembershipArgs {
-  where?: MembershipWhereInput
+export interface DeleteManyChatArgs {
+  where?: ChatWhereInput
 }
 
 export interface ExecuteRawArgs {
@@ -1671,7 +1413,7 @@ export interface UserWhereInput {
   createdPosts?: PostListRelationFilter
   likes?: LikeListRelationFilter
   comments?: CommentListRelationFilter
-  groups?: MembershipListRelationFilter
+  chats?: ChatListRelationFilter
 }
 
 export interface UserOrderByWithRelationInput {
@@ -1684,7 +1426,7 @@ export interface UserOrderByWithRelationInput {
   createdPosts?: PostOrderByRelationAggregateInput
   likes?: LikeOrderByRelationAggregateInput
   comments?: CommentOrderByRelationAggregateInput
-  groups?: MembershipOrderByRelationAggregateInput
+  chats?: ChatOrderByRelationAggregateInput
 }
 
 export interface UserWhereUniqueInput {
@@ -1926,84 +1668,43 @@ export interface CommentScalarWhereWithAggregatesInput {
   userId?: StringWithAggregatesFilter
 }
 
-export interface GroupWhereInput {
-  AND?: GroupWhereInput[]
-  OR?: GroupWhereInput[]
-  NOT?: GroupWhereInput[]
+export interface ChatWhereInput {
+  AND?: ChatWhereInput[]
+  OR?: ChatWhereInput[]
+  NOT?: ChatWhereInput[]
   id?: StringFilter
   createdAt?: DateTimeFilter
-  members?: MembershipListRelationFilter
+  updatedAt?: DateTimeFilter
+  users?: UserListRelationFilter
 }
 
-export interface GroupOrderByWithRelationInput {
+export interface ChatOrderByWithRelationInput {
   id?: SortOrder
   createdAt?: SortOrder
-  members?: MembershipOrderByRelationAggregateInput
+  updatedAt?: SortOrder
+  users?: UserOrderByRelationAggregateInput
 }
 
-export interface GroupWhereUniqueInput {
+export interface ChatWhereUniqueInput {
   id?: string
 }
 
-export interface GroupOrderByWithAggregationInput {
+export interface ChatOrderByWithAggregationInput {
   id?: SortOrder
   createdAt?: SortOrder
-  _count?: GroupCountOrderByAggregateInput
-  _max?: GroupMaxOrderByAggregateInput
-  _min?: GroupMinOrderByAggregateInput
+  updatedAt?: SortOrder
+  _count?: ChatCountOrderByAggregateInput
+  _max?: ChatMaxOrderByAggregateInput
+  _min?: ChatMinOrderByAggregateInput
 }
 
-export interface GroupScalarWhereWithAggregatesInput {
-  AND?: GroupScalarWhereWithAggregatesInput[]
-  OR?: GroupScalarWhereWithAggregatesInput[]
-  NOT?: GroupScalarWhereWithAggregatesInput[]
+export interface ChatScalarWhereWithAggregatesInput {
+  AND?: ChatScalarWhereWithAggregatesInput[]
+  OR?: ChatScalarWhereWithAggregatesInput[]
+  NOT?: ChatScalarWhereWithAggregatesInput[]
   id?: StringWithAggregatesFilter
   createdAt?: DateTimeWithAggregatesFilter
-}
-
-export interface MembershipWhereInput {
-  AND?: MembershipWhereInput[]
-  OR?: MembershipWhereInput[]
-  NOT?: MembershipWhereInput[]
-  id?: StringFilter
-  createdAt?: DateTimeFilter
-  User?: UserWhereInput | null
-  userId?: StringNullableFilter | null
-  Group?: GroupWhereInput | null
-  groupId?: StringNullableFilter | null
-}
-
-export interface MembershipOrderByWithRelationInput {
-  id?: SortOrder
-  createdAt?: SortOrder
-  User?: UserOrderByWithRelationInput
-  userId?: SortOrder
-  Group?: GroupOrderByWithRelationInput
-  groupId?: SortOrder
-}
-
-export interface MembershipWhereUniqueInput {
-  id?: string
-}
-
-export interface MembershipOrderByWithAggregationInput {
-  id?: SortOrder
-  createdAt?: SortOrder
-  userId?: SortOrder
-  groupId?: SortOrder
-  _count?: MembershipCountOrderByAggregateInput
-  _max?: MembershipMaxOrderByAggregateInput
-  _min?: MembershipMinOrderByAggregateInput
-}
-
-export interface MembershipScalarWhereWithAggregatesInput {
-  AND?: MembershipScalarWhereWithAggregatesInput[]
-  OR?: MembershipScalarWhereWithAggregatesInput[]
-  NOT?: MembershipScalarWhereWithAggregatesInput[]
-  id?: StringWithAggregatesFilter
-  createdAt?: DateTimeWithAggregatesFilter
-  userId?: StringNullableWithAggregatesFilter | null
-  groupId?: StringNullableWithAggregatesFilter | null
+  updatedAt?: DateTimeWithAggregatesFilter
 }
 
 export interface UserCreateInput {
@@ -2016,7 +1717,7 @@ export interface UserCreateInput {
   createdPosts?: PostCreateNestedManyWithoutCreatedByInput
   likes?: LikeCreateNestedManyWithoutUserInput
   comments?: CommentCreateNestedManyWithoutCreatedByInput
-  groups?: MembershipCreateNestedManyWithoutUserInput
+  chats?: ChatCreateNestedManyWithoutUsersInput
 }
 
 export interface UserUncheckedCreateInput {
@@ -2029,7 +1730,7 @@ export interface UserUncheckedCreateInput {
   createdPosts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
   likes?: LikeUncheckedCreateNestedManyWithoutUserInput
   comments?: CommentUncheckedCreateNestedManyWithoutCreatedByInput
-  groups?: MembershipUncheckedCreateNestedManyWithoutUserInput
+  chats?: ChatUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export interface UserUpdateInput {
@@ -2042,7 +1743,7 @@ export interface UserUpdateInput {
   createdPosts?: PostUpdateManyWithoutCreatedByInput
   likes?: LikeUpdateManyWithoutUserInput
   comments?: CommentUpdateManyWithoutCreatedByInput
-  groups?: MembershipUpdateManyWithoutUserInput
+  chats?: ChatUpdateManyWithoutUsersInput
 }
 
 export interface UserUncheckedUpdateInput {
@@ -2055,7 +1756,7 @@ export interface UserUncheckedUpdateInput {
   createdPosts?: PostUncheckedUpdateManyWithoutCreatedByInput
   likes?: LikeUncheckedUpdateManyWithoutUserInput
   comments?: CommentUncheckedUpdateManyWithoutCreatedByInput
-  groups?: MembershipUncheckedUpdateManyWithoutUserInput
+  chats?: ChatUncheckedUpdateManyWithoutUsersInput
 }
 
 export interface UserCreateManyInput {
@@ -2340,90 +2041,50 @@ export interface CommentUncheckedUpdateManyInput {
   userId?: StringFieldUpdateOperationsInput
 }
 
-export interface GroupCreateInput {
+export interface ChatCreateInput {
   id?: string
   createdAt?: Date
-  members?: MembershipCreateNestedManyWithoutGroupInput
+  updatedAt?: Date
+  users?: UserCreateNestedManyWithoutChatsInput
 }
 
-export interface GroupUncheckedCreateInput {
+export interface ChatUncheckedCreateInput {
   id?: string
   createdAt?: Date
-  members?: MembershipUncheckedCreateNestedManyWithoutGroupInput
+  updatedAt?: Date
+  users?: UserUncheckedCreateNestedManyWithoutChatsInput
 }
 
-export interface GroupUpdateInput {
+export interface ChatUpdateInput {
   id?: StringFieldUpdateOperationsInput
   createdAt?: DateTimeFieldUpdateOperationsInput
-  members?: MembershipUpdateManyWithoutGroupInput
+  updatedAt?: DateTimeFieldUpdateOperationsInput
+  users?: UserUpdateManyWithoutChatsInput
 }
 
-export interface GroupUncheckedUpdateInput {
+export interface ChatUncheckedUpdateInput {
   id?: StringFieldUpdateOperationsInput
   createdAt?: DateTimeFieldUpdateOperationsInput
-  members?: MembershipUncheckedUpdateManyWithoutGroupInput
+  updatedAt?: DateTimeFieldUpdateOperationsInput
+  users?: UserUncheckedUpdateManyWithoutChatsInput
 }
 
-export interface GroupCreateManyInput {
+export interface ChatCreateManyInput {
   id?: string
   createdAt?: Date
+  updatedAt?: Date
 }
 
-export interface GroupUpdateManyMutationInput {
+export interface ChatUpdateManyMutationInput {
   id?: StringFieldUpdateOperationsInput
   createdAt?: DateTimeFieldUpdateOperationsInput
+  updatedAt?: DateTimeFieldUpdateOperationsInput
 }
 
-export interface GroupUncheckedUpdateManyInput {
+export interface ChatUncheckedUpdateManyInput {
   id?: StringFieldUpdateOperationsInput
   createdAt?: DateTimeFieldUpdateOperationsInput
-}
-
-export interface MembershipCreateInput {
-  id?: string
-  createdAt?: Date
-  User?: UserCreateNestedOneWithoutGroupsInput
-  Group?: GroupCreateNestedOneWithoutMembersInput
-}
-
-export interface MembershipUncheckedCreateInput {
-  id?: string
-  createdAt?: Date
-  userId?: string | null
-  groupId?: string | null
-}
-
-export interface MembershipUpdateInput {
-  id?: StringFieldUpdateOperationsInput
-  createdAt?: DateTimeFieldUpdateOperationsInput
-  User?: UserUpdateOneWithoutGroupsInput
-  Group?: GroupUpdateOneWithoutMembersInput
-}
-
-export interface MembershipUncheckedUpdateInput {
-  id?: StringFieldUpdateOperationsInput
-  createdAt?: DateTimeFieldUpdateOperationsInput
-  userId?: NullableStringFieldUpdateOperationsInput | null
-  groupId?: NullableStringFieldUpdateOperationsInput | null
-}
-
-export interface MembershipCreateManyInput {
-  id?: string
-  createdAt?: Date
-  userId?: string | null
-  groupId?: string | null
-}
-
-export interface MembershipUpdateManyMutationInput {
-  id?: StringFieldUpdateOperationsInput
-  createdAt?: DateTimeFieldUpdateOperationsInput
-}
-
-export interface MembershipUncheckedUpdateManyInput {
-  id?: StringFieldUpdateOperationsInput
-  createdAt?: DateTimeFieldUpdateOperationsInput
-  userId?: NullableStringFieldUpdateOperationsInput | null
-  groupId?: NullableStringFieldUpdateOperationsInput | null
+  updatedAt?: DateTimeFieldUpdateOperationsInput
 }
 
 export interface StringFilter {
@@ -2474,10 +2135,10 @@ export interface CommentListRelationFilter {
   none?: CommentWhereInput
 }
 
-export interface MembershipListRelationFilter {
-  every?: MembershipWhereInput
-  some?: MembershipWhereInput
-  none?: MembershipWhereInput
+export interface ChatListRelationFilter {
+  every?: ChatWhereInput
+  some?: ChatWhereInput
+  none?: ChatWhereInput
 }
 
 export interface PostOrderByRelationAggregateInput {
@@ -2492,7 +2153,7 @@ export interface CommentOrderByRelationAggregateInput {
   _count?: SortOrder
 }
 
-export interface MembershipOrderByRelationAggregateInput {
+export interface ChatOrderByRelationAggregateInput {
   _count?: SortOrder
 }
 
@@ -2721,45 +2382,32 @@ export interface CommentMinOrderByAggregateInput {
   userId?: SortOrder
 }
 
-export interface GroupCountOrderByAggregateInput {
-  id?: SortOrder
-  createdAt?: SortOrder
+export interface UserListRelationFilter {
+  every?: UserWhereInput
+  some?: UserWhereInput
+  none?: UserWhereInput
 }
 
-export interface GroupMaxOrderByAggregateInput {
-  id?: SortOrder
-  createdAt?: SortOrder
+export interface UserOrderByRelationAggregateInput {
+  _count?: SortOrder
 }
 
-export interface GroupMinOrderByAggregateInput {
+export interface ChatCountOrderByAggregateInput {
   id?: SortOrder
   createdAt?: SortOrder
+  updatedAt?: SortOrder
 }
 
-export interface GroupRelationFilter {
-  is?: GroupWhereInput | null
-  isNot?: GroupWhereInput | null
-}
-
-export interface MembershipCountOrderByAggregateInput {
+export interface ChatMaxOrderByAggregateInput {
   id?: SortOrder
   createdAt?: SortOrder
-  userId?: SortOrder
-  groupId?: SortOrder
+  updatedAt?: SortOrder
 }
 
-export interface MembershipMaxOrderByAggregateInput {
+export interface ChatMinOrderByAggregateInput {
   id?: SortOrder
   createdAt?: SortOrder
-  userId?: SortOrder
-  groupId?: SortOrder
-}
-
-export interface MembershipMinOrderByAggregateInput {
-  id?: SortOrder
-  createdAt?: SortOrder
-  userId?: SortOrder
-  groupId?: SortOrder
+  updatedAt?: SortOrder
 }
 
 export interface PostCreateNestedManyWithoutCreatedByInput {
@@ -2783,11 +2431,10 @@ export interface CommentCreateNestedManyWithoutCreatedByInput {
   connect?: CommentWhereUniqueInput[]
 }
 
-export interface MembershipCreateNestedManyWithoutUserInput {
-  create?: MembershipCreateWithoutUserInput[]
-  connectOrCreate?: MembershipCreateOrConnectWithoutUserInput[]
-  createMany?: MembershipCreateManyUserInputEnvelope
-  connect?: MembershipWhereUniqueInput[]
+export interface ChatCreateNestedManyWithoutUsersInput {
+  create?: ChatCreateWithoutUsersInput[]
+  connectOrCreate?: ChatCreateOrConnectWithoutUsersInput[]
+  connect?: ChatWhereUniqueInput[]
 }
 
 export interface PostUncheckedCreateNestedManyWithoutCreatedByInput {
@@ -2811,11 +2458,10 @@ export interface CommentUncheckedCreateNestedManyWithoutCreatedByInput {
   connect?: CommentWhereUniqueInput[]
 }
 
-export interface MembershipUncheckedCreateNestedManyWithoutUserInput {
-  create?: MembershipCreateWithoutUserInput[]
-  connectOrCreate?: MembershipCreateOrConnectWithoutUserInput[]
-  createMany?: MembershipCreateManyUserInputEnvelope
-  connect?: MembershipWhereUniqueInput[]
+export interface ChatUncheckedCreateNestedManyWithoutUsersInput {
+  create?: ChatCreateWithoutUsersInput[]
+  connectOrCreate?: ChatCreateOrConnectWithoutUsersInput[]
+  connect?: ChatWhereUniqueInput[]
 }
 
 export interface StringFieldUpdateOperationsInput {
@@ -2868,18 +2514,17 @@ export interface CommentUpdateManyWithoutCreatedByInput {
   deleteMany?: CommentScalarWhereInput[]
 }
 
-export interface MembershipUpdateManyWithoutUserInput {
-  create?: MembershipCreateWithoutUserInput[]
-  connectOrCreate?: MembershipCreateOrConnectWithoutUserInput[]
-  upsert?: MembershipUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: MembershipCreateManyUserInputEnvelope
-  set?: MembershipWhereUniqueInput[]
-  disconnect?: MembershipWhereUniqueInput[]
-  delete?: MembershipWhereUniqueInput[]
-  connect?: MembershipWhereUniqueInput[]
-  update?: MembershipUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: MembershipUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: MembershipScalarWhereInput[]
+export interface ChatUpdateManyWithoutUsersInput {
+  create?: ChatCreateWithoutUsersInput[]
+  connectOrCreate?: ChatCreateOrConnectWithoutUsersInput[]
+  upsert?: ChatUpsertWithWhereUniqueWithoutUsersInput[]
+  set?: ChatWhereUniqueInput[]
+  disconnect?: ChatWhereUniqueInput[]
+  delete?: ChatWhereUniqueInput[]
+  connect?: ChatWhereUniqueInput[]
+  update?: ChatUpdateWithWhereUniqueWithoutUsersInput[]
+  updateMany?: ChatUpdateManyWithWhereWithoutUsersInput[]
+  deleteMany?: ChatScalarWhereInput[]
 }
 
 export interface PostUncheckedUpdateManyWithoutCreatedByInput {
@@ -2924,18 +2569,17 @@ export interface CommentUncheckedUpdateManyWithoutCreatedByInput {
   deleteMany?: CommentScalarWhereInput[]
 }
 
-export interface MembershipUncheckedUpdateManyWithoutUserInput {
-  create?: MembershipCreateWithoutUserInput[]
-  connectOrCreate?: MembershipCreateOrConnectWithoutUserInput[]
-  upsert?: MembershipUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: MembershipCreateManyUserInputEnvelope
-  set?: MembershipWhereUniqueInput[]
-  disconnect?: MembershipWhereUniqueInput[]
-  delete?: MembershipWhereUniqueInput[]
-  connect?: MembershipWhereUniqueInput[]
-  update?: MembershipUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: MembershipUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: MembershipScalarWhereInput[]
+export interface ChatUncheckedUpdateManyWithoutUsersInput {
+  create?: ChatCreateWithoutUsersInput[]
+  connectOrCreate?: ChatCreateOrConnectWithoutUsersInput[]
+  upsert?: ChatUpsertWithWhereUniqueWithoutUsersInput[]
+  set?: ChatWhereUniqueInput[]
+  disconnect?: ChatWhereUniqueInput[]
+  delete?: ChatWhereUniqueInput[]
+  connect?: ChatWhereUniqueInput[]
+  update?: ChatUpdateWithWhereUniqueWithoutUsersInput[]
+  updateMany?: ChatUpdateManyWithWhereWithoutUsersInput[]
+  deleteMany?: ChatScalarWhereInput[]
 }
 
 export interface PostCreatepictureInput {
@@ -3111,78 +2755,42 @@ export interface PostUpdateOneWithoutCommentsInput {
   update?: PostUncheckedUpdateWithoutCommentsInput
 }
 
-export interface MembershipCreateNestedManyWithoutGroupInput {
-  create?: MembershipCreateWithoutGroupInput[]
-  connectOrCreate?: MembershipCreateOrConnectWithoutGroupInput[]
-  createMany?: MembershipCreateManyGroupInputEnvelope
-  connect?: MembershipWhereUniqueInput[]
+export interface UserCreateNestedManyWithoutChatsInput {
+  create?: UserCreateWithoutChatsInput[]
+  connectOrCreate?: UserCreateOrConnectWithoutChatsInput[]
+  connect?: UserWhereUniqueInput[]
 }
 
-export interface MembershipUncheckedCreateNestedManyWithoutGroupInput {
-  create?: MembershipCreateWithoutGroupInput[]
-  connectOrCreate?: MembershipCreateOrConnectWithoutGroupInput[]
-  createMany?: MembershipCreateManyGroupInputEnvelope
-  connect?: MembershipWhereUniqueInput[]
+export interface UserUncheckedCreateNestedManyWithoutChatsInput {
+  create?: UserCreateWithoutChatsInput[]
+  connectOrCreate?: UserCreateOrConnectWithoutChatsInput[]
+  connect?: UserWhereUniqueInput[]
 }
 
-export interface MembershipUpdateManyWithoutGroupInput {
-  create?: MembershipCreateWithoutGroupInput[]
-  connectOrCreate?: MembershipCreateOrConnectWithoutGroupInput[]
-  upsert?: MembershipUpsertWithWhereUniqueWithoutGroupInput[]
-  createMany?: MembershipCreateManyGroupInputEnvelope
-  set?: MembershipWhereUniqueInput[]
-  disconnect?: MembershipWhereUniqueInput[]
-  delete?: MembershipWhereUniqueInput[]
-  connect?: MembershipWhereUniqueInput[]
-  update?: MembershipUpdateWithWhereUniqueWithoutGroupInput[]
-  updateMany?: MembershipUpdateManyWithWhereWithoutGroupInput[]
-  deleteMany?: MembershipScalarWhereInput[]
+export interface UserUpdateManyWithoutChatsInput {
+  create?: UserCreateWithoutChatsInput[]
+  connectOrCreate?: UserCreateOrConnectWithoutChatsInput[]
+  upsert?: UserUpsertWithWhereUniqueWithoutChatsInput[]
+  set?: UserWhereUniqueInput[]
+  disconnect?: UserWhereUniqueInput[]
+  delete?: UserWhereUniqueInput[]
+  connect?: UserWhereUniqueInput[]
+  update?: UserUpdateWithWhereUniqueWithoutChatsInput[]
+  updateMany?: UserUpdateManyWithWhereWithoutChatsInput[]
+  deleteMany?: UserScalarWhereInput[]
 }
 
-export interface MembershipUncheckedUpdateManyWithoutGroupInput {
-  create?: MembershipCreateWithoutGroupInput[]
-  connectOrCreate?: MembershipCreateOrConnectWithoutGroupInput[]
-  upsert?: MembershipUpsertWithWhereUniqueWithoutGroupInput[]
-  createMany?: MembershipCreateManyGroupInputEnvelope
-  set?: MembershipWhereUniqueInput[]
-  disconnect?: MembershipWhereUniqueInput[]
-  delete?: MembershipWhereUniqueInput[]
-  connect?: MembershipWhereUniqueInput[]
-  update?: MembershipUpdateWithWhereUniqueWithoutGroupInput[]
-  updateMany?: MembershipUpdateManyWithWhereWithoutGroupInput[]
-  deleteMany?: MembershipScalarWhereInput[]
-}
-
-export interface UserCreateNestedOneWithoutGroupsInput {
-  create?: UserUncheckedCreateWithoutGroupsInput
-  connectOrCreate?: UserCreateOrConnectWithoutGroupsInput
-  connect?: UserWhereUniqueInput
-}
-
-export interface GroupCreateNestedOneWithoutMembersInput {
-  create?: GroupUncheckedCreateWithoutMembersInput
-  connectOrCreate?: GroupCreateOrConnectWithoutMembersInput
-  connect?: GroupWhereUniqueInput
-}
-
-export interface UserUpdateOneWithoutGroupsInput {
-  create?: UserUncheckedCreateWithoutGroupsInput
-  connectOrCreate?: UserCreateOrConnectWithoutGroupsInput
-  upsert?: UserUpsertWithoutGroupsInput
-  disconnect?: boolean
-  delete?: boolean
-  connect?: UserWhereUniqueInput
-  update?: UserUncheckedUpdateWithoutGroupsInput
-}
-
-export interface GroupUpdateOneWithoutMembersInput {
-  create?: GroupUncheckedCreateWithoutMembersInput
-  connectOrCreate?: GroupCreateOrConnectWithoutMembersInput
-  upsert?: GroupUpsertWithoutMembersInput
-  disconnect?: boolean
-  delete?: boolean
-  connect?: GroupWhereUniqueInput
-  update?: GroupUncheckedUpdateWithoutMembersInput
+export interface UserUncheckedUpdateManyWithoutChatsInput {
+  create?: UserCreateWithoutChatsInput[]
+  connectOrCreate?: UserCreateOrConnectWithoutChatsInput[]
+  upsert?: UserUpsertWithWhereUniqueWithoutChatsInput[]
+  set?: UserWhereUniqueInput[]
+  disconnect?: UserWhereUniqueInput[]
+  delete?: UserWhereUniqueInput[]
+  connect?: UserWhereUniqueInput[]
+  update?: UserUpdateWithWhereUniqueWithoutChatsInput[]
+  updateMany?: UserUpdateManyWithWhereWithoutChatsInput[]
+  deleteMany?: UserScalarWhereInput[]
 }
 
 export interface NestedStringFilter {
@@ -3391,26 +2999,21 @@ export interface CommentCreateManyCreatedByInputEnvelope {
   skipDuplicates?: boolean
 }
 
-export interface MembershipCreateWithoutUserInput {
+export interface ChatCreateWithoutUsersInput {
   id?: string
   createdAt?: Date
-  Group?: GroupCreateNestedOneWithoutMembersInput
+  updatedAt?: Date
 }
 
-export interface MembershipUncheckedCreateWithoutUserInput {
+export interface ChatUncheckedCreateWithoutUsersInput {
   id?: string
   createdAt?: Date
-  groupId?: string | null
+  updatedAt?: Date
 }
 
-export interface MembershipCreateOrConnectWithoutUserInput {
-  where: MembershipWhereUniqueInput
-  create: MembershipUncheckedCreateWithoutUserInput
-}
-
-export interface MembershipCreateManyUserInputEnvelope {
-  data: MembershipCreateManyUserInput[]
-  skipDuplicates?: boolean
+export interface ChatCreateOrConnectWithoutUsersInput {
+  where: ChatWhereUniqueInput
+  create: ChatUncheckedCreateWithoutUsersInput
 }
 
 export interface PostUpsertWithWhereUniqueWithoutCreatedByInput {
@@ -3498,30 +3101,29 @@ export interface CommentScalarWhereInput {
   userId?: StringFilter
 }
 
-export interface MembershipUpsertWithWhereUniqueWithoutUserInput {
-  where: MembershipWhereUniqueInput
-  update: MembershipUncheckedUpdateWithoutUserInput
-  create: MembershipUncheckedCreateWithoutUserInput
+export interface ChatUpsertWithWhereUniqueWithoutUsersInput {
+  where: ChatWhereUniqueInput
+  update: ChatUncheckedUpdateWithoutUsersInput
+  create: ChatUncheckedCreateWithoutUsersInput
 }
 
-export interface MembershipUpdateWithWhereUniqueWithoutUserInput {
-  where: MembershipWhereUniqueInput
-  data: MembershipUncheckedUpdateWithoutUserInput
+export interface ChatUpdateWithWhereUniqueWithoutUsersInput {
+  where: ChatWhereUniqueInput
+  data: ChatUncheckedUpdateWithoutUsersInput
 }
 
-export interface MembershipUpdateManyWithWhereWithoutUserInput {
-  where: MembershipScalarWhereInput
-  data: MembershipUncheckedUpdateManyWithoutGroupsInput
+export interface ChatUpdateManyWithWhereWithoutUsersInput {
+  where: ChatScalarWhereInput
+  data: ChatUncheckedUpdateManyWithoutChatsInput
 }
 
-export interface MembershipScalarWhereInput {
-  AND?: MembershipScalarWhereInput[]
-  OR?: MembershipScalarWhereInput[]
-  NOT?: MembershipScalarWhereInput[]
+export interface ChatScalarWhereInput {
+  AND?: ChatScalarWhereInput[]
+  OR?: ChatScalarWhereInput[]
+  NOT?: ChatScalarWhereInput[]
   id?: StringFilter
   createdAt?: DateTimeFilter
-  userId?: StringNullableFilter | null
-  groupId?: StringNullableFilter | null
+  updatedAt?: DateTimeFilter
 }
 
 export interface CommentCreateWithoutPostInput {
@@ -3561,7 +3163,7 @@ export interface UserCreateWithoutCreatedPostsInput {
   name?: string | null
   likes?: LikeCreateNestedManyWithoutUserInput
   comments?: CommentCreateNestedManyWithoutCreatedByInput
-  groups?: MembershipCreateNestedManyWithoutUserInput
+  chats?: ChatCreateNestedManyWithoutUsersInput
 }
 
 export interface UserUncheckedCreateWithoutCreatedPostsInput {
@@ -3573,7 +3175,7 @@ export interface UserUncheckedCreateWithoutCreatedPostsInput {
   name?: string | null
   likes?: LikeUncheckedCreateNestedManyWithoutUserInput
   comments?: CommentUncheckedCreateNestedManyWithoutCreatedByInput
-  groups?: MembershipUncheckedCreateNestedManyWithoutUserInput
+  chats?: ChatUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export interface UserCreateOrConnectWithoutCreatedPostsInput {
@@ -3633,7 +3235,7 @@ export interface UserUpdateWithoutCreatedPostsInput {
   name?: NullableStringFieldUpdateOperationsInput | null
   likes?: LikeUpdateManyWithoutUserInput
   comments?: CommentUpdateManyWithoutCreatedByInput
-  groups?: MembershipUpdateManyWithoutUserInput
+  chats?: ChatUpdateManyWithoutUsersInput
 }
 
 export interface UserUncheckedUpdateWithoutCreatedPostsInput {
@@ -3645,7 +3247,7 @@ export interface UserUncheckedUpdateWithoutCreatedPostsInput {
   name?: NullableStringFieldUpdateOperationsInput | null
   likes?: LikeUncheckedUpdateManyWithoutUserInput
   comments?: CommentUncheckedUpdateManyWithoutCreatedByInput
-  groups?: MembershipUncheckedUpdateManyWithoutUserInput
+  chats?: ChatUncheckedUpdateManyWithoutUsersInput
 }
 
 export interface LikeUpsertWithWhereUniqueWithoutPostInput {
@@ -3702,7 +3304,7 @@ export interface UserCreateWithoutLikesInput {
   name?: string | null
   createdPosts?: PostCreateNestedManyWithoutCreatedByInput
   comments?: CommentCreateNestedManyWithoutCreatedByInput
-  groups?: MembershipCreateNestedManyWithoutUserInput
+  chats?: ChatCreateNestedManyWithoutUsersInput
 }
 
 export interface UserUncheckedCreateWithoutLikesInput {
@@ -3714,7 +3316,7 @@ export interface UserUncheckedCreateWithoutLikesInput {
   name?: string | null
   createdPosts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
   comments?: CommentUncheckedCreateNestedManyWithoutCreatedByInput
-  groups?: MembershipUncheckedCreateNestedManyWithoutUserInput
+  chats?: ChatUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export interface UserCreateOrConnectWithoutLikesInput {
@@ -3765,7 +3367,7 @@ export interface UserUpdateWithoutLikesInput {
   name?: NullableStringFieldUpdateOperationsInput | null
   createdPosts?: PostUpdateManyWithoutCreatedByInput
   comments?: CommentUpdateManyWithoutCreatedByInput
-  groups?: MembershipUpdateManyWithoutUserInput
+  chats?: ChatUpdateManyWithoutUsersInput
 }
 
 export interface UserUncheckedUpdateWithoutLikesInput {
@@ -3777,7 +3379,7 @@ export interface UserUncheckedUpdateWithoutLikesInput {
   name?: NullableStringFieldUpdateOperationsInput | null
   createdPosts?: PostUncheckedUpdateManyWithoutCreatedByInput
   comments?: CommentUncheckedUpdateManyWithoutCreatedByInput
-  groups?: MembershipUncheckedUpdateManyWithoutUserInput
+  chats?: ChatUncheckedUpdateManyWithoutUsersInput
 }
 
 export interface UserCreateWithoutCommentsInput {
@@ -3789,7 +3391,7 @@ export interface UserCreateWithoutCommentsInput {
   name?: string | null
   createdPosts?: PostCreateNestedManyWithoutCreatedByInput
   likes?: LikeCreateNestedManyWithoutUserInput
-  groups?: MembershipCreateNestedManyWithoutUserInput
+  chats?: ChatCreateNestedManyWithoutUsersInput
 }
 
 export interface UserUncheckedCreateWithoutCommentsInput {
@@ -3801,7 +3403,7 @@ export interface UserUncheckedCreateWithoutCommentsInput {
   name?: string | null
   createdPosts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
   likes?: LikeUncheckedCreateNestedManyWithoutUserInput
-  groups?: MembershipUncheckedCreateNestedManyWithoutUserInput
+  chats?: ChatUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export interface UserCreateOrConnectWithoutCommentsInput {
@@ -3852,7 +3454,7 @@ export interface UserUpdateWithoutCommentsInput {
   name?: NullableStringFieldUpdateOperationsInput | null
   createdPosts?: PostUpdateManyWithoutCreatedByInput
   likes?: LikeUpdateManyWithoutUserInput
-  groups?: MembershipUpdateManyWithoutUserInput
+  chats?: ChatUpdateManyWithoutUsersInput
 }
 
 export interface UserUncheckedUpdateWithoutCommentsInput {
@@ -3864,7 +3466,7 @@ export interface UserUncheckedUpdateWithoutCommentsInput {
   name?: NullableStringFieldUpdateOperationsInput | null
   createdPosts?: PostUncheckedUpdateManyWithoutCreatedByInput
   likes?: LikeUncheckedUpdateManyWithoutUserInput
-  groups?: MembershipUncheckedUpdateManyWithoutUserInput
+  chats?: ChatUncheckedUpdateManyWithoutUsersInput
 }
 
 export interface PostUpsertWithoutCommentsInput {
@@ -3896,45 +3498,7 @@ export interface PostUncheckedUpdateWithoutCommentsInput {
   likes?: LikeUncheckedUpdateManyWithoutPostInput
 }
 
-export interface MembershipCreateWithoutGroupInput {
-  id?: string
-  createdAt?: Date
-  User?: UserCreateNestedOneWithoutGroupsInput
-}
-
-export interface MembershipUncheckedCreateWithoutGroupInput {
-  id?: string
-  createdAt?: Date
-  userId?: string | null
-}
-
-export interface MembershipCreateOrConnectWithoutGroupInput {
-  where: MembershipWhereUniqueInput
-  create: MembershipUncheckedCreateWithoutGroupInput
-}
-
-export interface MembershipCreateManyGroupInputEnvelope {
-  data: MembershipCreateManyGroupInput[]
-  skipDuplicates?: boolean
-}
-
-export interface MembershipUpsertWithWhereUniqueWithoutGroupInput {
-  where: MembershipWhereUniqueInput
-  update: MembershipUncheckedUpdateWithoutGroupInput
-  create: MembershipUncheckedCreateWithoutGroupInput
-}
-
-export interface MembershipUpdateWithWhereUniqueWithoutGroupInput {
-  where: MembershipWhereUniqueInput
-  data: MembershipUncheckedUpdateWithoutGroupInput
-}
-
-export interface MembershipUpdateManyWithWhereWithoutGroupInput {
-  where: MembershipScalarWhereInput
-  data: MembershipUncheckedUpdateManyWithoutMembersInput
-}
-
-export interface UserCreateWithoutGroupsInput {
+export interface UserCreateWithoutChatsInput {
   id?: string
   tel: string
   code?: string | null
@@ -3946,7 +3510,7 @@ export interface UserCreateWithoutGroupsInput {
   comments?: CommentCreateNestedManyWithoutCreatedByInput
 }
 
-export interface UserUncheckedCreateWithoutGroupsInput {
+export interface UserUncheckedCreateWithoutChatsInput {
   id?: string
   tel: string
   code?: string | null
@@ -3958,68 +3522,37 @@ export interface UserUncheckedCreateWithoutGroupsInput {
   comments?: CommentUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
-export interface UserCreateOrConnectWithoutGroupsInput {
+export interface UserCreateOrConnectWithoutChatsInput {
   where: UserWhereUniqueInput
-  create: UserUncheckedCreateWithoutGroupsInput
+  create: UserUncheckedCreateWithoutChatsInput
 }
 
-export interface GroupCreateWithoutMembersInput {
-  id?: string
-  createdAt?: Date
+export interface UserUpsertWithWhereUniqueWithoutChatsInput {
+  where: UserWhereUniqueInput
+  update: UserUncheckedUpdateWithoutChatsInput
+  create: UserUncheckedCreateWithoutChatsInput
 }
 
-export interface GroupUncheckedCreateWithoutMembersInput {
-  id?: string
-  createdAt?: Date
+export interface UserUpdateWithWhereUniqueWithoutChatsInput {
+  where: UserWhereUniqueInput
+  data: UserUncheckedUpdateWithoutChatsInput
 }
 
-export interface GroupCreateOrConnectWithoutMembersInput {
-  where: GroupWhereUniqueInput
-  create: GroupUncheckedCreateWithoutMembersInput
+export interface UserUpdateManyWithWhereWithoutChatsInput {
+  where: UserScalarWhereInput
+  data: UserUncheckedUpdateManyWithoutUsersInput
 }
 
-export interface UserUpsertWithoutGroupsInput {
-  update: UserUncheckedUpdateWithoutGroupsInput
-  create: UserUncheckedCreateWithoutGroupsInput
-}
-
-export interface UserUpdateWithoutGroupsInput {
-  id?: StringFieldUpdateOperationsInput
-  tel?: StringFieldUpdateOperationsInput
-  code?: NullableStringFieldUpdateOperationsInput | null
-  role?: NullableStringFieldUpdateOperationsInput | null
-  surname?: NullableStringFieldUpdateOperationsInput | null
-  name?: NullableStringFieldUpdateOperationsInput | null
-  createdPosts?: PostUpdateManyWithoutCreatedByInput
-  likes?: LikeUpdateManyWithoutUserInput
-  comments?: CommentUpdateManyWithoutCreatedByInput
-}
-
-export interface UserUncheckedUpdateWithoutGroupsInput {
-  id?: StringFieldUpdateOperationsInput
-  tel?: StringFieldUpdateOperationsInput
-  code?: NullableStringFieldUpdateOperationsInput | null
-  role?: NullableStringFieldUpdateOperationsInput | null
-  surname?: NullableStringFieldUpdateOperationsInput | null
-  name?: NullableStringFieldUpdateOperationsInput | null
-  createdPosts?: PostUncheckedUpdateManyWithoutCreatedByInput
-  likes?: LikeUncheckedUpdateManyWithoutUserInput
-  comments?: CommentUncheckedUpdateManyWithoutCreatedByInput
-}
-
-export interface GroupUpsertWithoutMembersInput {
-  update: GroupUncheckedUpdateWithoutMembersInput
-  create: GroupUncheckedCreateWithoutMembersInput
-}
-
-export interface GroupUpdateWithoutMembersInput {
-  id?: StringFieldUpdateOperationsInput
-  createdAt?: DateTimeFieldUpdateOperationsInput
-}
-
-export interface GroupUncheckedUpdateWithoutMembersInput {
-  id?: StringFieldUpdateOperationsInput
-  createdAt?: DateTimeFieldUpdateOperationsInput
+export interface UserScalarWhereInput {
+  AND?: UserScalarWhereInput[]
+  OR?: UserScalarWhereInput[]
+  NOT?: UserScalarWhereInput[]
+  id?: StringFilter
+  tel?: StringFilter
+  code?: StringNullableFilter | null
+  role?: StringNullableFilter | null
+  surname?: StringNullableFilter | null
+  name?: StringNullableFilter | null
 }
 
 export interface PostCreateManyCreatedByInput {
@@ -4045,12 +3578,6 @@ export interface CommentCreateManyCreatedByInput {
   blocked?: boolean
   text: string
   postId?: string | null
-}
-
-export interface MembershipCreateManyUserInput {
-  id?: string
-  createdAt?: Date
-  groupId?: string | null
 }
 
 export interface PostUpdateWithoutCreatedByInput {
@@ -4132,22 +3659,22 @@ export interface CommentUncheckedUpdateManyWithoutCommentsInput {
   postId?: NullableStringFieldUpdateOperationsInput | null
 }
 
-export interface MembershipUpdateWithoutUserInput {
+export interface ChatUpdateWithoutUsersInput {
   id?: StringFieldUpdateOperationsInput
   createdAt?: DateTimeFieldUpdateOperationsInput
-  Group?: GroupUpdateOneWithoutMembersInput
+  updatedAt?: DateTimeFieldUpdateOperationsInput
 }
 
-export interface MembershipUncheckedUpdateWithoutUserInput {
+export interface ChatUncheckedUpdateWithoutUsersInput {
   id?: StringFieldUpdateOperationsInput
   createdAt?: DateTimeFieldUpdateOperationsInput
-  groupId?: NullableStringFieldUpdateOperationsInput | null
+  updatedAt?: DateTimeFieldUpdateOperationsInput
 }
 
-export interface MembershipUncheckedUpdateManyWithoutGroupsInput {
+export interface ChatUncheckedUpdateManyWithoutChatsInput {
   id?: StringFieldUpdateOperationsInput
   createdAt?: DateTimeFieldUpdateOperationsInput
-  groupId?: NullableStringFieldUpdateOperationsInput | null
+  updatedAt?: DateTimeFieldUpdateOperationsInput
 }
 
 export interface CommentCreateManyPostInput {
@@ -4195,28 +3722,37 @@ export interface LikeUncheckedUpdateWithoutPostInput {
   userId?: StringFieldUpdateOperationsInput
 }
 
-export interface MembershipCreateManyGroupInput {
-  id?: string
-  createdAt?: Date
-  userId?: string | null
+export interface UserUpdateWithoutChatsInput {
+  id?: StringFieldUpdateOperationsInput
+  tel?: StringFieldUpdateOperationsInput
+  code?: NullableStringFieldUpdateOperationsInput | null
+  role?: NullableStringFieldUpdateOperationsInput | null
+  surname?: NullableStringFieldUpdateOperationsInput | null
+  name?: NullableStringFieldUpdateOperationsInput | null
+  createdPosts?: PostUpdateManyWithoutCreatedByInput
+  likes?: LikeUpdateManyWithoutUserInput
+  comments?: CommentUpdateManyWithoutCreatedByInput
 }
 
-export interface MembershipUpdateWithoutGroupInput {
+export interface UserUncheckedUpdateWithoutChatsInput {
   id?: StringFieldUpdateOperationsInput
-  createdAt?: DateTimeFieldUpdateOperationsInput
-  User?: UserUpdateOneWithoutGroupsInput
+  tel?: StringFieldUpdateOperationsInput
+  code?: NullableStringFieldUpdateOperationsInput | null
+  role?: NullableStringFieldUpdateOperationsInput | null
+  surname?: NullableStringFieldUpdateOperationsInput | null
+  name?: NullableStringFieldUpdateOperationsInput | null
+  createdPosts?: PostUncheckedUpdateManyWithoutCreatedByInput
+  likes?: LikeUncheckedUpdateManyWithoutUserInput
+  comments?: CommentUncheckedUpdateManyWithoutCreatedByInput
 }
 
-export interface MembershipUncheckedUpdateWithoutGroupInput {
+export interface UserUncheckedUpdateManyWithoutUsersInput {
   id?: StringFieldUpdateOperationsInput
-  createdAt?: DateTimeFieldUpdateOperationsInput
-  userId?: NullableStringFieldUpdateOperationsInput | null
-}
-
-export interface MembershipUncheckedUpdateManyWithoutMembersInput {
-  id?: StringFieldUpdateOperationsInput
-  createdAt?: DateTimeFieldUpdateOperationsInput
-  userId?: NullableStringFieldUpdateOperationsInput | null
+  tel?: StringFieldUpdateOperationsInput
+  code?: NullableStringFieldUpdateOperationsInput | null
+  role?: NullableStringFieldUpdateOperationsInput | null
+  surname?: NullableStringFieldUpdateOperationsInput | null
+  name?: NullableStringFieldUpdateOperationsInput | null
 }
 
 export enum UserScalarFieldEnum {
@@ -4259,15 +3795,10 @@ export enum CommentScalarFieldEnum {
   postId = 'postId',
   userId = 'userId',
 }
-export enum GroupScalarFieldEnum {
+export enum ChatScalarFieldEnum {
   id = 'id',
   createdAt = 'createdAt',
-}
-export enum MembershipScalarFieldEnum {
-  id = 'id',
-  createdAt = 'createdAt',
-  userId = 'userId',
-  groupId = 'groupId',
+  updatedAt = 'updatedAt',
 }
 export enum SortOrder {
   asc = 'asc',

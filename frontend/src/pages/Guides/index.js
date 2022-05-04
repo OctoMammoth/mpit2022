@@ -10,15 +10,15 @@ const Guides = ({navigation}) => {
           <Text bold style={{textAlign: 'center', fontSize: 24}}>
             Гайды
          </Text>
-          <TouchableOpacity>
-
-          </TouchableOpacity>
-          <Button
-            onPress={() => {
+         <Text style={{textAlign: 'center', fontSize: 18}}>
+            Сейчас идет вебинар
+         </Text>
+          <TouchableOpacity onPress={() => {
                 navigation.navigate("Jitsi", {id:"248v81s"})
             }}
-            text={"Go to Jitsi"}
-          />
+            style={{backgroundColor: '#6775FF', height: 84*2, borderRadius: 4}}>
+
+          </TouchableOpacity>
       </Layout>
    )
 }

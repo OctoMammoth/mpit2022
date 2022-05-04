@@ -18,7 +18,7 @@ const Button = ({
    style,
    textStyle,
    type = 1,
-   disabled,
+   disabled = false,
    onPress,
    bold,
 }) => {
@@ -28,6 +28,7 @@ const Button = ({
 
    return (
       <TouchableOpacity
+         onPress={onPress}
          disabled={disabled}
          activeOpacity={1}
          style={[
@@ -50,7 +51,6 @@ const Button = ({
                  },
             style,
          ]}
-         onPress={onPress}
          onPressIn={useCallback(() => {
             setPressedIn(true)
          }, [isPressedIn])}

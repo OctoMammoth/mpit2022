@@ -1,16 +1,16 @@
-import { gql } from "@apollo/client";
+import {gql} from '@apollo/client'
 
 export const ME = gql`
-query {
-    me {
-        id
-        tel
-        chats {
+   query {
+      me {
+         id
+         tel
+         chats {
             users {
-                id
-                tel
+               id
+               tel
             }
-        }
-    }
-}
+         }
+      }
+   }
 `

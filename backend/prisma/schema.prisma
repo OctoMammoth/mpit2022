@@ -22,7 +22,6 @@ model User {
   likes        Like[]
   comments     Comment[]
   chats        Chat[]
-  // groups       Membership[]
 }
 
 model File {
@@ -44,8 +43,6 @@ model Post {
   comments    Comment[]
   createdBy   User      @relation(fields: [userId], references: [id])
   userId      String
-  // master   Master @relation(fields: [masterId], references: [id])
-  // masterId String
   likes       Like[]
 }
 
@@ -76,18 +73,3 @@ model Chat {
   updatedAt DateTime @updatedAt
   users     User[]
 }
-
-// model Group {
-//   id        String       @id @default(cuid())
-//   createdAt DateTime     @default(now())
-//   members   Membership[]
-// }
-
-// model Membership {
-//   id        String   @id @default(cuid())
-//   createdAt DateTime @default(now())
-//   User      User?    @relation(fields: [userId], references: [id])
-//   userId    String?
-//   Group     Group?   @relation(fields: [groupId], references: [id])
-//   groupId   String?
-// }
