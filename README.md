@@ -29,7 +29,7 @@ use `yarn migrate` for setup your database
 
 use `yarn start` for start backend
 
-## Jitsi install copy .env.examply to .env
+## Jitsi install copy .env.example to .env
 and set up for your machine
 
 ## Frontend
