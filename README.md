@@ -1,4 +1,11 @@
 # Ascend
+
+Наш проект Ascend решает проблему с резкой нехваткой информационных платформ связи образовательных учреждений, работодателей и учеников с помощью Профориентационного мультитула. 
+Разработка предоставляет пользователям возможность подкреплять  свои знания с помощью умного алгоритма подбора интересных статей и новстей и прохождения Agile-курсов от ЦОПП “на ходу”. Присутствует возможность упрощённого ведения порфолио, личного кабинета.
+
+# MPIT - 2022
+https://mpityakutia.ru/
+
 [![Node.js CI/CD Production](https://github.com/OctoMammoth/mpit2022/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/OctoMammoth/mpit2022/actions/workflows/main.yml)
 [![Node.js CI/CD Development](https://github.com/OctoMammoth/mpit2022/actions/workflows/dev.yml/badge.svg?branch=dev)](https://github.com/OctoMammoth/mpit2022/actions/workflows/dev.yml)
 
