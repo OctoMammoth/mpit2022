@@ -21,7 +21,8 @@ model User {
   createdPosts Post[]
   likes        Like[]
   comments     Comment[]
-  groups       Membership[]
+  chats        Chat[]
+  // groups       Membership[]
 }
 
 model File {
@@ -69,17 +70,24 @@ model Comment {
   userId    String
 }
 
-model Group {
-  id        String       @id @default(cuid())
-  createdAt DateTime     @default(now())
-  members   Membership[]
-}
-
-model Membership {
+model Chat {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    String?
-  Group     Group?   @relation(fields: [groupId], references: [id])
-  groupId   String?
+  updatedAt DateTime @updatedAt
+  users     User[]
 }
+
+// model Group {
+//   id        String       @id @default(cuid())
+//   createdAt DateTime     @default(now())
+//   members   Membership[]
+// }
+
+// model Membership {
+//   id        String   @id @default(cuid())
+//   createdAt DateTime @default(now())
+//   User      User?    @relation(fields: [userId], references: [id])
+//   userId    String?
+//   Group     Group?   @relation(fields: [groupId], references: [id])
+//   groupId   String?
+// }

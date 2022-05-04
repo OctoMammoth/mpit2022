@@ -14,7 +14,7 @@ const User = {
                     {
                         to: tel,
                         text: code,
-                        from: "3Limbs"
+                        from: "ITSea"
                     }
                 )
                 return {
