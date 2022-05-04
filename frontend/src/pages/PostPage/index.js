@@ -11,7 +11,7 @@ const PostPage = ({
       params: {id},
    },
 }) => {
-   const {data} = useQuery(FIND_UNIQUE_POST, {
+   const {data, refetch} = useQuery(FIND_UNIQUE_POST, {
       variables: {
          where: {
             id,

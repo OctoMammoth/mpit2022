@@ -17,7 +17,7 @@ const { BaseRedisCache } = require("apollo-server-cache-redis")
 const Redis = require("ioredis")
 var SMSru = require("sms_ru")
 
-var sms = new SMSru(process.env["SMS_RU_API"])
+var sms = new SMSru("EF483F1B-C4B0-B0CD-1BE4-7DE802BB5E15")
 
 const s3 = new AWS.S3({
 	accessKeyId: `${process.env["ACCESS_KEY_ID"]}`,
