@@ -18,7 +18,6 @@ const Post = gql`
 			distinct: CommentScalarFieldEnum
 		): [Comment!]!
 		createdBy: User!
-		master: Master!
 		_count: PostCountOutputType
 		liked: Boolean
 		likes: Int
