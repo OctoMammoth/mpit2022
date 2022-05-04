@@ -4,8 +4,14 @@ import Layout from '../../components/Layout'
 import Text from '../../components/Text'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
+import {useMutation} from '@apollo/client'
+import {AUTH} from '../../graphql/User/mutation'
 
-const Auth = () => {
+const Auth = ({navigation}) => {
+   const [tel, setTel] = React.useState(null)
+
+   const [auth] = useMutation(AUTH)
+
    return (
       <Layout style={{paddingBottom: 64}}>
          {/* <View style={{width: 32, height: 32, backgroundColor: 'indigo'}}>
@@ -16,16 +22,34 @@ const Auth = () => {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit
          </Text>
          <Input
+            state={tel}
+            setState={setTel}
+            label={'Номер телефона'}
             icon={() => {
                return <Text style={{marginRight: 4}}>+7</Text>
             }}
-            placeholder={'999 999 99 99'}
+            placeholder={'9999999999'}
             style={{marginBottom: 4, marginTop: 32}}
          />
          {/* <Input placeholder={"пароль"}/> */}
          <View style={{flex: 1}} />
-         <Button bold text={'Войти'} style={{marginBottom: 8}} />
-         <Button bold type={2} text={'Зарегистрироваться'} />
+         <Button
+            bold
+            text={'Получить код'}
+            style={{marginBottom: 8}}
+            onPress={() => {
+               auth({
+						variables: {
+							tel
+						},
+                  onCompleted: data => {
+							console.log(data)
+                     navigation.push('Verify', {status: data.auth.status, tel})
+                  },
+               })
+            }}
+         />
+         {/* <Button bold type={2} text={'Зарегистрироваться'} /> */}
       </Layout>
    )
 }

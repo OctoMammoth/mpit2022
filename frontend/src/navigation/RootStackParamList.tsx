@@ -10,11 +10,20 @@ type JsonDataType = {
 }
 
 export type RootStackParamList = {
+   Splash: undefined
    TestZone: undefined
    Jitsi: {
       url: string
    }
+   ChatSession: {
+      otherId: string,
+      otherTel: string
+   }
    Auth: undefined
+   Verify: {
+      tel: string,
+      status: string
+   }
    UploadImage: undefined
    Main: undefined
 }

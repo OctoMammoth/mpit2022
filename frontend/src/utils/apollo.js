@@ -1,11 +1,11 @@
-import { ApolloClient, InMemoryCache, createHttpLink, ApolloProvider, ApolloLink } from "@apollo/client"
+import { ApolloClient, InMemoryCache, ApolloLink } from "@apollo/client"
 import {setContext} from '@apollo/client/link/context'
 import {onError} from '@apollo/client/link/error'
 import {createUploadLink} from 'apollo-upload-client'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// export const url = "https://mpit.3limbs.ml/graphql"
-export const url = "http://192.168.3.2:4000/graphql"
+export const url = "https://api.3limbs.ml/graphql"
+// export const url = "http://192.168.3.2:4000/graphql"
 
 const authLink = setContext(async (_, { headers }) => {
     const token = await AsyncStorage.getItem('token')

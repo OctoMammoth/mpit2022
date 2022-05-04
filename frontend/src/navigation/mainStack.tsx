@@ -10,6 +10,10 @@ import TestZone from '../pages/TestZone'
 import Jitsi from '../pages/Jitsi/index.js'
 import UploadImage from '../pages/UploadImage'
 import Auth from '../pages/Auth'
+import Verify from '../pages/Verify'
+import Splash from '../pages/Splash'
+import { MainTabs } from './tabs'
+import ChatSession from '../pages/ChatSession'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -32,8 +36,20 @@ export const RootStackNav = () => {
             // headerTintColor: ColorSheet.textColor,
          }}>
             <Stack.Screen
+               name="Splash"
+               component={Splash}
+            />
+            <Stack.Screen
+               name="ChatSession"
+               component={ChatSession}
+            />
+            <Stack.Screen
                name="Auth"
                component={Auth}
+            />
+            <Stack.Screen
+               name="Verify"
+               component={Verify}
             />
             <Stack.Screen
                name="TestZone"
@@ -46,6 +62,10 @@ export const RootStackNav = () => {
             <Stack.Screen
                name="UploadImage"
                component={UploadImage}
+            />
+            <Stack.Screen
+               name="Main"
+               component={MainTabs}
             />
          <Stack.Group
             screenOptions={{
