@@ -12,9 +12,10 @@ type Props = {
    hint?: string
 	icon?: any
    style?: ViewStyle
+   onSubmitEditing? : () => void
 }
 
-const Input = ({placeholder, error, setState, state, label, hint, icon, style}) => {
+const Input = ({placeholder, error, setState, state, label, hint, icon, style, onSubmitEditing}) => {
    const ColorSheet = ColorScheme()
 
    return (
@@ -46,7 +47,8 @@ const Input = ({placeholder, error, setState, state, label, hint, icon, style}) 
                </View>
             ) : null}
             <TextInput
-               style={{padding: 0}}
+               onSubmitEditing={onSubmitEditing}
+               style={{padding: 0, width: '100%'}}
                placeholderTextColor={ColorSheet.placeholderText}
                placeholder={placeholder}
                value={state}
