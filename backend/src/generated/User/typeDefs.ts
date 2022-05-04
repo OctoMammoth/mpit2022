@@ -31,14 +31,14 @@ export default gql`
       skip: Int
       distinct: CommentScalarFieldEnum
     ): [Comment!]!
-    groups(
-      where: MembershipWhereInput
-      orderBy: MembershipOrderByWithRelationInput
-      cursor: MembershipWhereUniqueInput
+    chats(
+      where: ChatWhereInput
+      orderBy: ChatOrderByWithRelationInput
+      cursor: ChatWhereUniqueInput
       take: Int
       skip: Int
-      distinct: MembershipScalarFieldEnum
-    ): [Membership!]!
+      distinct: ChatScalarFieldEnum
+    ): [Chat!]!
     _count: UserCountOutputType!
   }
 

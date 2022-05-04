@@ -15,6 +15,9 @@ export type RootStackParamList = {
    Jitsi: {
       url: string
    }
+   PostPage: {
+      id: string
+   }
    ChatSession: {
       otherId: string,
       otherTel: string

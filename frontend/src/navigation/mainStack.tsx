@@ -14,6 +14,7 @@ import Verify from '../pages/Verify'
 import Splash from '../pages/Splash'
 import { MainTabs } from './tabs'
 import ChatSession from '../pages/ChatSession'
+import PostPage from '../pages/PostPage'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -42,6 +43,10 @@ export const RootStackNav = () => {
             <Stack.Screen
                name="ChatSession"
                component={ChatSession}
+            />
+            <Stack.Screen
+               name="PostPage"
+               component={PostPage}
             />
             <Stack.Screen
                name="Auth"
